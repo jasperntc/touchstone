@@ -1,0 +1,1 @@
+{"brief": "Meridian needs an available-balance lookup. Add a function to the meridian package that takes an account id and reports the total of that account's POSTED ledger entries. Pending entries do not count. An account with no entries, or an id that is not a usable string, must be reported as a failure rather than a total.", "module": "balance.py", "task": "t001"}

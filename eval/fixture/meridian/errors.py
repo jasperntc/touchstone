@@ -1,0 +1,9 @@
+"""Error codes. Every failure in Meridian is one of these, never free text."""
+
+E_NOT_FOUND = "E_NOT_FOUND"
+E_INVALID = "E_INVALID"
+E_CONFLICT = "E_CONFLICT"
+E_FORBIDDEN = "E_FORBIDDEN"
+E_UNAVAILABLE = "E_UNAVAILABLE"
+
+ALL_CODES = (E_NOT_FOUND, E_INVALID, E_CONFLICT, E_FORBIDDEN, E_UNAVAILABLE)
