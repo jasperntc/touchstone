@@ -1,1 +1,1 @@
-"""Meridian — internal ledger services."""
+"""Meridian -- internal ledger platform."""

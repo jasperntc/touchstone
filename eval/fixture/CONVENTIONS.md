@@ -1,28 +1,36 @@
 # Meridian house conventions
 
-Six rules. They are not industry standards and no model can know them from
-training — they are this codebase's arbitrary choices, which is the whole point
-of using them to calibrate.
+Eight rules. They are this codebase's own choices, not industry standards.
+Delivered only in the `oracle` condition.
 
-Every one of them is visible in the committed code. None of them is written
-down anywhere the answerer can read during a run: this file is delivered only
-in the `oracle` condition, which exists to prove the instrument has range.
+Each is phrased to match what the current code actually does. Rule 6 in the
+F001 fixture read as an imperative ("take a clock argument") and one oracle
+answer bolted a clock onto a function that needed no time at all, scoring worse
+than the control. A rule that overstates itself makes the upper control worse,
+which is the opposite of its job.
 
-1. **Money is micros.** Millionths of a currency unit, stored as `int`, on a
-   field or variable whose name ends `_micros`. Never cents, never floats.
+1. **Money is micros.** Millionths of a currency unit, as `int`, on a field or
+   variable whose name ends `_micros`. Never cents, never floats.
 
 2. **Public functions return a triple**, `(ok: bool, value, error: str | None)`.
-   On success `(True, value, None)`; on failure `(False, None, CODE)`.
+   Success is `(True, value, None)`; failure is `(False, None, CODE)`.
 
-3. **Failures are codes, never prose.** Every error is one of the constants in
-   `meridian/errors.py`. A free-text error message is a defect.
+3. **Failures are codes, never prose.** Every error is a constant from
+   `meridian/errors.py`.
 
-4. **Public functions never raise.** A bad argument returns `E_INVALID`; it
-   does not raise `ValueError`.
+4. **Public functions never raise.** Unusable input returns `E_INVALID`.
 
-5. **Every public function is `@audited` and listed in `__all__`.** A public
-   function missing either is invisible to compliance and is rejected on sight.
+5. **Every public function is `@audited` and named in `__all__`.**
 
-6. **Time is injected.** Take a `clock` argument and call `clock.now_ms()`.
-   `datetime.now()` and `time.time()` appear nowhere in this codebase.
-   Timestamps are epoch milliseconds on a field named `*_ms`.
+6. **Functions that need the current time take a `clock` parameter and call
+   `clock.now_ms()`.** Never `datetime.now()` or `time.time()`. Functions that
+   need no current time take no clock. Timestamps are epoch milliseconds on a
+   `*_ms` field.
+
+7. **Identifiers are validated for shape, not just truthiness.** `ids.valid`
+   checks the prefix (`acc`, `led`, `pay`, `inv`, `ntf`, `fx`) and the body. A
+   wrong-prefix or malformed id is `E_INVALID`, not an account that happens to
+   have no rows.
+
+8. **Functions returning a list of rows return them newest first**, ordered by
+   the row's `*_at_ms` field descending.

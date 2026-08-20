@@ -1,8 +1,4 @@
-"""The only source of time in Meridian.
-
-Nothing in this codebase calls datetime.now() or time.time(). A clock is
-passed in, so every test can pin it and every audit entry is reproducible.
-"""
+"""The only source of time in current Meridian code."""
 from __future__ import annotations
 
 

@@ -88,7 +88,8 @@ def load_key(task_id: str):
     return mod
 
 
-def score(answer: Path, task_id: str) -> dict:
+def score(answer: Path, task_id: str, *, package: str = "",
+          module: str = "balance.py") -> dict:
     """Run one answer against one key, in a scratch copy of the fixture.
 
     A subprocess and a throwaway tree, so a module that mutates fixture state
@@ -108,11 +109,18 @@ def score(answer: Path, task_id: str) -> dict:
     with tempfile.TemporaryDirectory(prefix="assay-") as scratch:
         tree = Path(scratch)
         shutil.copytree(FIXTURE / "meridian", tree / "meridian")
-        shutil.copy2(answer, tree / "meridian" / "balance.py")
+        dest = tree / "meridian"
+        if package:
+            dest = dest / package
+            dest.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(answer, dest / module)
         runner = tree / "_run.py"
+        import_path = ("meridian." + package + "." + module[:-3]
+                       if package else "meridian." + module[:-3])
         runner.write_text(RUNNER_SRC, encoding="utf-8")
         proc = subprocess.run(
-            [sys.executable, "-I", str(runner), str(KEYS / f"{task_id}.py")],
+            [sys.executable, "-I", str(runner), str(KEYS / f"{task_id}.py"),
+             import_path],
             capture_output=True, text=True, cwd=scratch, timeout=60, check=False)
 
     try:
@@ -137,8 +145,9 @@ key = importlib.util.module_from_spec(spec); spec.loader.exec_module(key)
 sys.path.insert(0, ".")
 out = {"import_error": None, "checks": {}}
 try:
-    import meridian.balance as answer
-    src = Path("meridian/balance.py").read_text(encoding="utf-8")
+    import importlib
+    answer = importlib.import_module(sys.argv[2])
+    src = Path(answer.__file__).read_text(encoding="utf-8")
 except Exception as exc:
     out["import_error"] = f"{type(exc).__name__}: {exc}"
     for c in key.CHECKS:
@@ -177,8 +186,9 @@ def by_kind(result: dict) -> dict:
 def run_set(directory: Path) -> dict:
     out = {}
     for task in load_tasks():
-        answer = directory / task["module"]
-        out[task["task"]] = score(answer, task["task"])
+        out[task["task"]] = score(directory / task["module"], task["task"],
+                                  package=task.get("package", ""),
+                                  module=task["module"])
     return out
 
 

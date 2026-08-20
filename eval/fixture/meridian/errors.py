@@ -1,4 +1,4 @@
-"""Error codes. Every failure in Meridian is one of these, never free text."""
+"""Error codes. Every failure in current Meridian code is one of these."""
 
 E_NOT_FOUND = "E_NOT_FOUND"
 E_INVALID = "E_INVALID"

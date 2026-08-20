@@ -1,4 +1,4 @@
-"""The audit decorator. Every exported function wears one."""
+"""The audit decorator. Every current export wears one."""
 from __future__ import annotations
 
 import functools
@@ -7,11 +7,7 @@ _LOG: list[dict] = []
 
 
 def audited(fn):
-    """Record every call to an exported function.
-
-    Compliance reads _LOG. A public function that is not audited is invisible
-    to them, which is why the reviewers reject one on sight.
-    """
+    """Record every call to an exported function."""
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
         ok, value, error = fn(*args, **kwargs)
