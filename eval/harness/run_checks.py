@@ -106,7 +106,7 @@ def score(answer: Path, task_id: str, *, package: str = "",
     if not answer.exists():
         return every("answer was never written")
 
-    with tempfile.TemporaryDirectory(prefix="assay-") as scratch:
+    with tempfile.TemporaryDirectory(prefix="touchstone-") as scratch:
         tree = Path(scratch)
         shutil.copytree(FIXTURE / "meridian", tree / "meridian")
         dest = tree / "meridian"

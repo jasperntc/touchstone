@@ -1,6 +1,12 @@
-# assay
+# Touchstone
 
 *A collection of skills, none of which is here on anybody's say-so.*
+
+A touchstone is the dark stone a jeweller rubs gold against: the streak
+it leaves tells you the purity, whatever the piece looks like. The stone
+is the instrument, not the inventory — which is the right way round for
+this repository, where the measuring apparatus is the part that has
+earned its keep so far.
 
 Every entry in `skills/` carries a `RESULT.md` naming a blind run in which it
 beat a control. A directory without one fails CI. "Proven" is a property of the
