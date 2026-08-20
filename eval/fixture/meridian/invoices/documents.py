@@ -1,6 +1,6 @@
 """invoices.documents -- documents.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited. Ids are validated through ids.valid.
+Part of the invoices service.
 """
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
 """invoices.lines -- lines.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited.
+Part of the invoices service.
 """
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
 """payouts.state -- state.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited.
+Part of the payouts service.
 """
 from __future__ import annotations
 

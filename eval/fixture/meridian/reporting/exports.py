@@ -1,6 +1,6 @@
 """reporting.exports -- exports.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited.
+Part of the reporting service.
 """
 from __future__ import annotations
 

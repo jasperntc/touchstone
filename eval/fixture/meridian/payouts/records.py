@@ -1,6 +1,6 @@
 """payouts.records -- records.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited. Rows come back newest first.
+Part of the payouts service.
 """
 from __future__ import annotations
 

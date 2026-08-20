@@ -1,6 +1,6 @@
 """webhooks.deliveries -- deliveries.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited. Rows come back newest first.
+Part of the webhooks service.
 """
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
 """settlements.windows -- windows.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited. Time comes from the injected clock.
+Part of the settlements service.
 """
 from __future__ import annotations
 

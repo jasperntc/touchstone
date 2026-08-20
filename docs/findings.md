@@ -77,3 +77,91 @@ granularity, and the answer to "do skills beat no skills" is no.
 
 That test is worth running once, with the result written down in advance, and
 it is the last rescue this hypothesis gets.
+
+---
+
+## F002 — breadth produces a real but sub-threshold gap. Fixture rejected.
+
+**2026-08-21. Six blind `claude-opus-5` subagents, three per condition.**
+Threshold fixed in [prediction-F002.md](prediction-F002.md) before the run.
+
+The fixture grew to 36 modules across 11 packages, 52 files, 1,372 lines. Five
+conventions wide, three narrow — injected clock, id-shape validation,
+newest-first ordering — and none of the three demonstrated in `accounts/`,
+where the task lives.
+
+| arm | functional | conventional | missed |
+|---|---:|---:|---|
+| `none` q4m | 2/2 | 8/8 | — **contaminated, see below** |
+| `none` n8x | 2/2 | 7/8 | c8 ordering |
+| `none` v2p | 2/2 | 7/8 | c8 ordering |
+| `oracle` ×3 | 6/6 | **24/24 (100%)** | — |
+
+| comparison | lift |
+|---|---:|
+| oracle vs the two clean controls | **+12.5** |
+| oracle vs all three | +8.3 |
+| **pre-registered threshold** | **+15.0** |
+
+**Below threshold. The fixture is rejected**, per the rule written down before
+the run: a lift between 0 and +15 is too small to build on at one sample per
+cell, and moving the bar after seeing +12.5 is the thing pre-registration
+exists to prevent.
+
+### What the gap actually consists of
+
+One convention. Both clean controls found the clock (C6) and id-shape
+validation (C7) despite neither being demonstrated anywhere in the package they
+were working in — they read widely, and one explicitly reported that the
+neighbouring `accounts/` files were *"the wrong template"* because they validate
+by truthiness. What both missed was **ordering**, and only ordering.
+
+So breadth is not nothing, and it is much less than F001's −26.7 suggested. But
+"the entire measured effect is one convention out of eight, in two samples" is
+not a foundation to build a skill collection on.
+
+### The blindness breach, which is mine
+
+`none` q4m scored 8/8 because it **retrieved `CONVENTIONS.md` from the
+repository's git history**. It said so unprompted. I had moved the file out of
+the working tree and then committed it, in the same session, at `7fd2183` — so
+`git show` handed over all eight rules.
+
+Stashing the working tree is not blindness when the answer key is in the object
+store. Every prior run in both repositories used the same procedure, so the
+same hole existed and simply was not exercised. The fix is structural: serve
+the fixture from a directory with **no git history**, rather than from a
+subdirectory of the repository that holds the key.
+
+Counting q4m as a control drags the lift down to +8.3; excluding it gives
++12.5. Both fail. The result does not turn on the breach, but the procedure
+does not survive it.
+
+### Five instrument defects, four caught before the run
+
+Caught pre-flight, by building the calibration first:
+
+1. **`c8` could not fail** — the store listed `acc_101` already newest-first, so
+   an answer that never sorted passed for free. Given the outcome above, this
+   one mattered: c8 is the entire measured effect, and uncaught it would have
+   erased the gap completely and produced a false null.
+2. **C6 was entangled with correctness** — rows anchored to a fixed past instant
+   made every wall-time answer functionally wrong.
+3. **Module docstrings recited the conventions** — one grep for "convention"
+   would have handed a control all eight.
+4. **My own design commentary in `_store.py`** stated c8's expected answer
+   outright, in the one file the brief tells the answerer to read.
+
+Caught only by a subagent volunteering it:
+
+5. **git history**, above.
+
+### Standing
+
+The hypothesis is not dead — the pre-registered meaning of "≤ 0" was not met,
+and the direction is right. But it has now consumed two fixtures and twelve
+blind subagents without clearing a bar set in advance, and this was already the
+last rescue. **The next attempt must be the last, and it must be pre-registered
+the same way.** If a fixture with no-git isolation and more than one
+discriminating convention still lands under +15, the collection's premise
+changes to information genuinely absent from the codebase, or it stops.

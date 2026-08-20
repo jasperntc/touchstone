@@ -1,6 +1,6 @@
 """accounts.holders -- holders.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited.
+Part of the accounts service.
 """
 from __future__ import annotations
 

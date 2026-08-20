@@ -1,6 +1,6 @@
 """settlements.batches -- batches.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited.
+Part of the settlements service.
 """
 from __future__ import annotations
 

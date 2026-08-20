@@ -1,6 +1,6 @@
 """invoices.dunning -- dunning.
 
-Current conventions. Amounts are micros; every export returns a triple and is audited. Rows come back newest first.
+Part of the invoices service.
 """
 from __future__ import annotations
 

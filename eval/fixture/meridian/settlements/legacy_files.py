@@ -1,6 +1,6 @@
 """settlements.legacy_files -- legacy.
 
-Predates the current conventions. Amounts are cents, failures raise, and nothing here is audited. Do not copy this shape into new code; it is scheduled for removal.
+Pre-2024 helper, kept for the migration window.
 """
 from __future__ import annotations
 

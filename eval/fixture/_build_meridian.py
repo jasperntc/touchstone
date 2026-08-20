@@ -125,14 +125,12 @@ def current_module(pkg, mod, fns, *, clock=False, order=False, ids=False):
                 '    if not rows:\n        return False, None, E_NOT_FOUND\n'
                 '    return True, sum(r["amount_micros"] for r in rows), None\n')
         body.append(f"@audited\ndef {sig}:\n{guard}{inner}{tail}")
-    note = ("Current conventions. Amounts are micros; every export returns a "
-            "triple and is audited.")
-    if clock:
-        note += " Time comes from the injected clock."
-    if order:
-        note += " Rows come back newest first."
-    if ids:
-        note += " Ids are validated through ids.valid."
+    # Neutral prose ONLY. An earlier draft had every current module recite the
+    # conventions it demonstrates ("Amounts are micros; every export returns a
+    # triple and is audited"), which meant one grep for "convention" handed a
+    # control all eight and destroyed the breadth mechanism this fixture exists
+    # to test. The conventions must be DEMONSTRATED in code and STATED nowhere.
+    note = "Part of the {pkg} service.".format(pkg=pkg)
     return (HEADER.format(title=f"{pkg}.{mod} -- {mod.replace('_', ' ')}.", note=note)
             + "\n".join(imports) + "\n\n"
             + f'__all__ = {fns!r}\n\n'
@@ -160,9 +158,9 @@ def legacy_module(pkg, mod, fns):
         ''').strip())
     return (HEADER.format(
         title=f"{pkg}.{mod} -- legacy.",
-        note=("Predates the current conventions. Amounts are cents, failures "
-              "raise, and nothing here is audited. Do not copy this shape into "
-              "new code; it is scheduled for removal."))
+        # Also neutral: the previous wording enumerated exactly which
+        # conventions this file violates, which is the same leak in reverse.
+        note="Pre-2024 helper, kept for the migration window.")
         + '_ROWS = [\n'
         + "".join(f'    {{"id": "old_{i}", "account": "acc_10{i % 3}", '
                   f'"amount_cents": {(i + 1) * 125}}},\n' for i in range(3))
