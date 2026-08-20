@@ -1,0 +1,6 @@
+# LF everywhere. agency-agents lost a day to this: Git for Windows ships
+# core.autocrlf=true, so a checkout rewrote files while the stored blobs stayed
+# LF, and a digest computed over working-copy bytes passed locally and failed
+# in CI. Not an allowlist -- the allowlist approach failed there twice by
+# leaving a new extension uncovered.
+* text=auto eol=lf
