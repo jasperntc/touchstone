@@ -21,7 +21,8 @@ _ROWS = [
 def outcomes_for(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["disputes_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["disputes_id"] == account_id]
     rows.sort(key=lambda r: r["created_at_ms"], reverse=True)
     if not rows:
         return False, None, E_NOT_FOUND
@@ -32,7 +33,8 @@ def outcomes_for(account_id):
 def latest_outcome(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["disputes_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["disputes_id"] == account_id]
     rows.sort(key=lambda r: r["created_at_ms"], reverse=True)
     if not rows:
         return False, None, E_NOT_FOUND

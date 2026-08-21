@@ -21,7 +21,8 @@ _ROWS = [
 def balance_micros(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["treasury_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["treasury_id"] == account_id]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, [dict(r) for r in rows], None
@@ -31,7 +32,8 @@ def balance_micros(account_id):
 def reserved_micros(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["treasury_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["treasury_id"] == account_id]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, sum(r["amount_micros"] for r in rows), None

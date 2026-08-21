@@ -31,6 +31,13 @@ jobs:
       - name: The key can still say no
         run: python3 eval/harness/run_checks.py --calibrate
 
+      # Neither of the two gates above notices a narrow convention quietly
+      # becoming visible inside the task's own package, which would leave
+      # everything green while turning the experiment into a different one.
+      # The partial draft has to fail exactly the narrow set.
+      - name: The instrument reads at three levels
+        run: python3 eval/harness/run_checks.py --drafts
+
       # The README promises that a skill without a RESULT.md fails CI. This is
       # the line that makes that true.
       - name: Nothing unproven in skills/
