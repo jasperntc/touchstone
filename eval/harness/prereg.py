@@ -73,7 +73,8 @@ def _git(*args, cwd=None):
                           capture_output=True, text=True, check=False)
 
 
-def register(name, threshold, min_discriminating, min_gap, note) -> int:
+def register(name, threshold, min_discriminating, min_gap, note,
+             min_captured=0.0, harm_eval="", harm_tolerance=5.0) -> int:
     PREREG.mkdir(parents=True, exist_ok=True)
     path = PREREG / (name + ".json")
     if path.exists():
@@ -87,6 +88,9 @@ def register(name, threshold, min_discriminating, min_gap, note) -> int:
         "min_discriminating_expectations": min_discriminating,
         "discriminating_gap_points": min_gap,
         "required_configurations": list(REQUIRED_CONFIGS),
+        "min_captured_percent": min_captured,
+        "harm_eval": harm_eval,
+        "harm_tolerance_points": harm_tolerance,
         "note": note,
     }, indent=2) + "\n", encoding="utf-8", newline="\n")
     rel = path.relative_to(REPO_ROOT).as_posix()
@@ -142,6 +146,26 @@ def evaluate(spec, data):
     if missing:
         return {"ok": False, "verdict": "UNREADABLE", "missing": missing}
 
+    # A skill is installed into a whole project, not just onto the task it was
+    # written for. `harm_eval` names a task the skill has no business
+    # improving; its runs are held out of the primary numbers entirely and
+    # checked separately for regression. Pooling them in would let a skill that
+    # damages unrelated work hide inside a good average, and "does installing
+    # this make anything worse" is the question a COLLECTION has to answer that
+    # a single skill's own eval never asks.
+    harm_name = spec.get("harm_eval") or ""
+    harm_runs, main_runs = {}, {}
+    for config, rs in runs_by_config.items():
+        main_runs[config] = [r for r in rs
+                             if str(r.get("eval_name")) != harm_name]
+        drop = [r for r in rs if str(r.get("eval_name")) == harm_name]
+        if drop:
+            harm_runs[config] = drop
+    if not any(main_runs.values()):
+        return {"ok": False, "verdict": "UNREADABLE",
+                "missing": ["every eval is the harm eval"]}
+    runs_by_config = main_runs
+
     stats = {c: _pooled(r) for c, r in runs_by_config.items()}
     base = stats["without_skill"]["pooled"]
     headroom = stats["oracle"]["pooled"] - base
@@ -167,13 +191,35 @@ def evaluate(spec, data):
 
     lift_ok = lift >= spec["primary_threshold_points"]
     spread_ok = len(discriminating) >= spec["min_discriminating_expectations"]
+    captured = 100.0 * lift / headroom if headroom > 0 else 0.0
+
+    # When the information is genuinely absent from the codebase, the oracle
+    # beats the control BY CONSTRUCTION, and an absolute lift then proves
+    # nothing about the skill -- only that the facts help, which was never in
+    # doubt. What is worth measuring is how much of the headroom the oracle
+    # proved exists the PACKAGED skill actually delivers.
+    min_captured = spec.get("min_captured_percent") or 0.0
+    captured_ok = captured >= min_captured
+
+    harm_stats, harm_delta, harm_ok = None, None, True
+    if harm_runs.get("with_skill") and harm_runs.get("without_skill"):
+        harm_stats = {c: _pooled(r) for c, r in harm_runs.items()}
+        harm_delta = (harm_stats["with_skill"]["pooled"]
+                      - harm_stats["without_skill"]["pooled"])
+        harm_ok = harm_delta >= -abs(spec.get("harm_tolerance_points", 5.0))
+    elif harm_name:
+        harm_ok = False   # declared but produced no runs: an untested claim
+
+    ok = lift_ok and spread_ok and captured_ok and harm_ok
     return {
-        "ok": lift_ok and spread_ok,
-        "verdict": "PROVEN" if (lift_ok and spread_ok) else "NOT PROVEN",
+        "ok": ok,
+        "verdict": "PROVEN" if ok else "NOT PROVEN",
         "missing": [], "stats": stats, "headroom": headroom, "lift": lift,
-        "rows": rows, "discriminating": discriminating,
-        "captured": 100.0 * lift / headroom if headroom > 0 else 0.0,
+        "rows": rows, "discriminating": discriminating, "captured": captured,
         "ceiling_ok": True, "lift_ok": lift_ok, "spread_ok": spread_ok,
+        "captured_ok": captured_ok, "min_captured": min_captured,
+        "harm_stats": harm_stats, "harm_delta": harm_delta, "harm_ok": harm_ok,
+        "harm_eval": harm_name,
     }
 
 
@@ -248,8 +294,21 @@ def verdict(name, benchmark: Path) -> int:
         len(out["discriminating"]), spec["discriminating_gap_points"],
         spec["min_discriminating_expectations"],
         "MET" if out["spread_ok"] else "MISSED"))
-    print("  captured     {:.0f}% of the headroom the oracle proved is there"
-          .format(out["captured"]))
+    print("  captured     {:.0f}% of the headroom the oracle proved is there{}"
+          .format(out["captured"],
+                  "   vs {:.0f}%   {}".format(
+                      out["min_captured"],
+                      "MET" if out["captured_ok"] else "MISSED")
+                  if out["min_captured"] else ""))
+    if out["harm_eval"]:
+        if out["harm_delta"] is None:
+            print("  no harm      {} declared but produced no runs   MISSED"
+                  .format(out["harm_eval"]))
+        else:
+            print("  no harm      {} moved {:+.1f}, tolerance -{:.0f}   {}".format(
+                out["harm_eval"], out["harm_delta"],
+                abs(spec.get("harm_tolerance_points", 5.0)),
+                "ok" if out["harm_ok"] else "REGRESSED"))
     print("\n  VERDICT: {}".format(out["verdict"]))
     if not out["ok"]:
         print("           Nothing enters skills/ on this run.")
@@ -289,13 +348,20 @@ def main() -> int:
     ap.add_argument("--min-discriminating", type=int, default=2)
     ap.add_argument("--gap", type=float, default=40.0)
     ap.add_argument("--note", default="")
+    ap.add_argument("--min-captured", type=float, default=0.0,
+                    help="percent of the oracle's headroom the skill must deliver")
+    ap.add_argument("--harm-eval", default="",
+                    help="an eval the skill should NOT change; held out of the "
+                         "primary numbers and checked for regression")
+    ap.add_argument("--harm-tolerance", type=float, default=5.0)
     ap.add_argument("--check-prompts", nargs=2, metavar=("BASE", "TREATED"))
     ap.add_argument("--treatment", metavar="PATH")
     args = ap.parse_args()
 
     if args.register:
         return register(args.register, args.threshold, args.min_discriminating,
-                        args.gap, args.note)
+                        args.gap, args.note, args.min_captured,
+                        args.harm_eval, args.harm_tolerance)
     if args.check_prompts:
         if not args.treatment:
             raise SystemExit("--check-prompts needs --treatment")
