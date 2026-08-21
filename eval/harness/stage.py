@@ -214,12 +214,29 @@ def audit(root: Path) -> int:
     return 0
 
 
+def fanout(out: Path, count: int, force: bool = False):
+    """One staged tree per sample, each verified before any is handed out.
+
+    skill-creator gives every run its own OUTPUT directory but not its own copy
+    of the thing being worked on, so for a skill about a codebase every run
+    would share one tree. F001's third defect was exactly that: one subagent's
+    grep surfaced a sibling's answer, and another watched two more appear
+    mid-run. Samples that can see each other are not samples.
+    """
+    made = []
+    for i in range(count):
+        made.append(stage(out / "w{:02d}".format(i + 1), force=force))
+    return made
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     ap.add_argument("--verify", metavar="DIR")
     ap.add_argument("--audit", action="store_true")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--fanout", type=int, metavar="N",
+                    help="stage N isolated trees, one per run")
     args = ap.parse_args()
 
     if args.audit:
@@ -233,6 +250,11 @@ def main() -> int:
                   file=sys.stderr)
             return 1
         print("PASSED: no git above it, no key in it, fixture present.")
+        return 0
+
+    if args.fanout:
+        for tree in fanout(Path(args.out), args.fanout, force=args.force):
+            print(tree)
         return 0
 
     out = stage(Path(args.out), force=args.force)
