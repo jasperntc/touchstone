@@ -213,20 +213,37 @@ def self_test() -> int:
     return 0
 
 
+def discriminating_kind(task_id: str) -> str:
+    """Which kind of check a task expects to separate the arms.
+
+    t002 discriminates on `conventional`. t004 discriminates on `absent` and
+    carries two conventional checks as a SANITY FLOOR the naive draft is
+    supposed to pass -- a control failing those means the run is broken, not
+    that a skill helped. Assuming "conventional" for every task made calibrate
+    reject t004 for behaving exactly as designed.
+    """
+    return getattr(load_key(task_id), "DISCRIMINATING", "conventional")
+
+
 def calibrate() -> int:
     """The naive draft must clear the floor and fail the discriminator."""
     floor_broken, cannot_separate = [], []
     for tid, result in run_set(REPO_ROOT / "eval" / "naive").items():
         kinds = by_kind(result)
         func = kinds.get("functional", {"passed": 0, "total": 0, "failed": []})
-        conv = kinds.get("conventional", {"passed": 0, "total": 0, "failed": []})
+        want = discriminating_kind(tid)
+        disc = kinds.get(want, {"passed": 0, "total": 0, "failed": []})
+        others = " ".join(
+            f"{k} {v['passed']}/{v['total']}" for k, v in sorted(kinds.items())
+            if k not in ("functional", want))
         print(f"  {tid}  functional {func['passed']}/{func['total']}   "
-              f"conventional {conv['passed']}/{conv['total']}")
-        for cid in conv["failed"]:
+              f"{want} {disc['passed']}/{disc['total']}"
+              + (f"   [floor: {others}]" if others else ""))
+        for cid in disc["failed"]:
             print(f"      caught: {cid}")
         if func["failed"]:
             floor_broken.append((tid, func["failed"]))
-        if not conv["failed"]:
+        if not disc["failed"]:
             cannot_separate.append(tid)
 
     if floor_broken:
@@ -237,9 +254,9 @@ def calibrate() -> int:
                   f"is unreadable.", file=sys.stderr)
         return 1
     if cannot_separate:
-        print(f"\nFAILED: {', '.join(cannot_separate)} pass every conventional "
-              f"check without being told the conventions. Those tasks cannot "
-              f"separate anything and must not be used.", file=sys.stderr)
+        print(f"\nFAILED: {', '.join(cannot_separate)} pass every "
+              f"discriminating check without being told anything. Those "
+              f"tasks cannot separate and must not be used.", file=sys.stderr)
         return 1
     print("\nPASSED: the floor is reachable and every task can discriminate.")
     return 0
@@ -259,23 +276,51 @@ def drafts() -> int:
     """
     rows, problems = [], []
     for name in ("reference", "partial", "naive"):
-        for tid, result in run_set(REPO_ROOT / "eval" / name).items():
+        root = REPO_ROOT / "eval" / name
+        for tid, result in run_set(root).items():
+            task = next(t for t in load_tasks() if t["task"] == tid)
+            if not (root / task["module"]).exists():
+                # `partial` models a reader of one package and answers only the
+                # task that package holds. A draft that does not answer a task
+                # is not a draft that failed it.
+                continue
             kinds = by_kind(result)
             func = kinds.get("functional", {"passed": 0, "total": 0, "failed": []})
-            conv = kinds.get("conventional", {"passed": 0, "total": 0, "failed": []})
+            want = discriminating_kind(tid)
+            conv = kinds.get(want, {"passed": 0, "total": 0, "failed": []})
+            floor = {k: v for k, v in kinds.items()
+                     if k not in ("functional", want)}
             rows.append((name, tid, func, conv))
+            extra = " ".join(f"{k} {v['passed']}/{v['total']}"
+                             for k, v in sorted(floor.items()))
             print(f"  {name:<10} {tid}  functional {func['passed']}/{func['total']}"
-                  f"   conventional {conv['passed']}/{conv['total']}")
+                  f"   {want} {conv['passed']}/{conv['total']}"
+                  + (f"   [floor: {extra}]" if extra else ""))
             if func["failed"]:
                 problems.append(f"{name}/{tid} fails a functional check "
                                 f"({', '.join(func['failed'])}); the floor must be "
-                                f"reachable without knowing the conventions")
-            if name == "reference" and conv["failed"]:
-                problems.append(f"reference/{tid} fails {conv['failed']}")
-            if name == "naive" and conv["passed"]:
-                problems.append(f"naive/{tid} passes {conv['passed']} conventional "
-                                f"check(s) without being told anything")
-            if name == "partial":
+                                f"reachable without knowing anything")
+            if name == "reference":
+                # The reference knows everything, so nothing of any kind may
+                # reject it -- including the sanity floor.
+                broke = [c for k, v in kinds.items() if k != "functional"
+                         for c in v["failed"]]
+                if broke:
+                    problems.append(f"reference/{tid} fails {broke}")
+            if name == "naive":
+                if conv["passed"]:
+                    problems.append(
+                        f"naive/{tid} passes {conv['passed']} {want} check(s) "
+                        f"without being told anything")
+                # The floor is meant to be reachable unaided. A naive draft
+                # failing it means the run would be unreadable, not that a
+                # skill helped -- the opposite error, and worth catching.
+                missed = [c for k, v in floor.items() for c in v["failed"]]
+                if missed:
+                    problems.append(
+                        f"naive/{tid} fails the sanity floor {missed}; those "
+                        f"checks exist to prove a control is competent")
+            if name == "partial" and hasattr(load_key(tid), "NARROW"):
                 expected = set(load_key(tid).NARROW)
                 got = set(conv["failed"])
                 if got != expected:

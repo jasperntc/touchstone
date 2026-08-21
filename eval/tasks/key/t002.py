@@ -114,6 +114,8 @@ NARROW = [
     "c10_zero_rows_are_not_listed",
 ]
 
+DISCRIMINATING = "conventional"
+
 FN_NAME = "recent_adjustments"
 
 WINDOW_DAYS = 7
