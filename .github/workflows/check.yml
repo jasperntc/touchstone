@@ -48,6 +48,12 @@ jobs:
       - name: The fixture is served outside every repository
         run: python3 -m unittest tests.test_isolation -v
 
+      # The three gates that sit on top of skill-creator. Each is
+      # mutation-checked in the test file: removing the precedence check, the
+      # ceiling check or the spread floor fails exactly one test each.
+      - name: The gates skill-creator does not have
+        run: python3 -m unittest tests.test_prereg -v
+
       # Prose that states a rule is the answer key in disguise. Reported, not
       # enforced -- code that demonstrates a convention is the point.
       - name: Prose audit

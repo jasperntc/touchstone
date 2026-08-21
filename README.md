@@ -99,6 +99,20 @@ same four gates:
 3. the eval is calibrated: `oracle` must beat `none`
 4. a blind run beats the control, recorded in `RESULT.md`
 
+**The evaluation itself is [skill-creator]'s job, not this repository's.** It
+already spawns with-skill and baseline runs together, grades them, aggregates
+mean/stddev/delta, judges A against B blind without being told which is which,
+and tunes descriptions against a held-out split. A parallel harness here was
+rebuilding that, and has been deleted.
+
+What remains here is the three gates skill-creator does not have — an `oracle`
+upper control, a threshold committed to git before the run, and a floor on how
+many expectations carry the effect — plus per-run tree isolation for tasks about
+a codebase. Each one corresponds to a false reading this project has already
+produced. See **[docs/how-a-skill-gets-proven.md](docs/how-a-skill-gets-proven.md)**.
+
+[skill-creator]: https://github.com/anthropics/claude-plugins-official
+
 ## Commands
 
 ```bash
@@ -115,4 +129,12 @@ python eval/harness/run_checks.py --drafts
 
 ```bash
 python eval/harness/stage.py --audit
+```
+
+```bash
+python eval/harness/prereg.py --register F004 --threshold 15
+```
+
+```bash
+python eval/harness/prereg.py --verdict F004 --benchmark <workspace>/iteration-1/benchmark.json
 ```
