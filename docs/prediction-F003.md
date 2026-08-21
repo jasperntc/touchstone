@@ -172,3 +172,11 @@ double the surface for the kind of instrument defect that has produced four
 false readings across two repositories. Whatever this measures, it measures
 about `recent_adjustments` in `accounts/`, and a second task would be the first
 thing to run if the fixture is accepted.
+
+## The model, recorded before spawning
+
+**`claude-opus-5`**, the same tier F001 and F002 used. The prediction above --
+`none` at 60-80% -- is read straight off F002's Opus controls, so running a
+different tier would leave no way to tell a change in the fixture from a change
+in the answerer. A weaker control finding fewer conventions would widen the gap
+for a reason that has nothing to do with what is being tested.
