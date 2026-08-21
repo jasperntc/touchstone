@@ -1,0 +1,15 @@
+{
+  "run": "F004",
+  "primary_threshold_points": 40.0,
+  "min_discriminating_expectations": 2,
+  "discriminating_gap_points": 40.0,
+  "required_configurations": [
+    "without_skill",
+    "oracle",
+    "with_skill"
+  ],
+  "min_captured_percent": 70.0,
+  "harm_eval": "t002",
+  "harm_tolerance_points": 5.0,
+  "note": "Absent information: Certis rate limit, non-idempotent re-verify, null score. Task validity gate is the +40; the real gate is capture. See docs/design-F004.md"
+}

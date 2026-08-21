@@ -129,6 +129,105 @@ class Thresholds(unittest.TestCase):
         self.assertAlmostEqual(66.67, out["captured"], places=1)
 
 
+class CaptureAndHarm(unittest.TestCase):
+    """The two gates F004 needs, which an absolute lift cannot express.
+
+    When the skill's payload is information genuinely absent from the codebase,
+    the oracle beats the control by construction. "Did the facts help" is not a
+    question -- "did the packaged skill deliver them" is.
+    """
+
+    ABSENT = dict(SPEC, primary_threshold_points=10.0,
+                  min_captured_percent=80.0, harm_eval="unrelated",
+                  harm_tolerance_points=5.0)
+
+    def test_a_skill_that_delivers_little_of_the_headroom_is_not_proven(self):
+        none = {"a": True, "b": False, "c": False, "d": False, "e": False}
+        skill = {"a": True, "b": True, "c": False, "d": False, "e": False}
+        out = prereg.evaluate(self.ABSENT, benchmark(
+            run("without_skill", none, eval_name="main", n=1),
+            run("oracle", dict.fromkeys("abcde", True), eval_name="main", n=1),
+            run("with_skill", skill, eval_name="main", n=1),
+            run("without_skill", {"z": True}, eval_name="unrelated", n=1),
+            run("with_skill", {"z": True}, eval_name="unrelated", n=1)))
+        self.assertTrue(out["lift_ok"], "lift clears the absolute bar")
+        self.assertAlmostEqual(25.0, out["captured"])
+        self.assertFalse(out["captured_ok"])
+        self.assertEqual("NOT PROVEN", out["verdict"])
+
+    def test_a_skill_that_delivers_almost_all_of_it_is_proven(self):
+        none = {"a": True, "b": False, "c": False, "d": False, "e": False}
+        skill = {"a": True, "b": True, "c": True, "d": True, "e": False}
+        out = prereg.evaluate(self.ABSENT, benchmark(
+            run("without_skill", none, eval_name="main", n=1),
+            run("oracle", dict.fromkeys("abcde", True), eval_name="main", n=1),
+            run("with_skill", skill, eval_name="main", n=1),
+            run("without_skill", {"z": True}, eval_name="unrelated", n=1),
+            run("with_skill", {"z": True}, eval_name="unrelated", n=1)))
+        self.assertAlmostEqual(75.0, out["captured"])
+        self.assertFalse(out["captured_ok"], "75 is under the registered 80")
+        skill["e"] = True
+        out = prereg.evaluate(self.ABSENT, benchmark(
+            run("without_skill", none, eval_name="main", n=1),
+            run("oracle", dict.fromkeys("abcde", True), eval_name="main", n=1),
+            run("with_skill", skill, eval_name="main", n=1),
+            run("without_skill", {"z": True}, eval_name="unrelated", n=1),
+            run("with_skill", {"z": True}, eval_name="unrelated", n=1)))
+        self.assertAlmostEqual(100.0, out["captured"])
+        self.assertEqual("PROVEN", out["verdict"])
+
+    def test_a_skill_that_damages_unrelated_work_is_not_proven(self):
+        """The question a collection has to answer and a single eval never asks."""
+        none = {"a": True, "b": False, "c": False, "d": False, "e": False}
+        skill = dict.fromkeys("abcde", True)
+        out = prereg.evaluate(self.ABSENT, benchmark(
+            run("without_skill", none, eval_name="main", n=1),
+            run("oracle", skill, eval_name="main", n=1),
+            run("with_skill", skill, eval_name="main", n=1),
+            run("without_skill", {"y": True, "z": True}, eval_name="unrelated", n=1),
+            run("with_skill", {"y": False, "z": False}, eval_name="unrelated", n=1)))
+        # Everything the skill was written for passes. The harm gate alone
+        # must be what flips the verdict.
+        self.assertTrue(out["lift_ok"])
+        self.assertTrue(out["spread_ok"])
+        self.assertTrue(out["captured_ok"])
+        self.assertFalse(out["harm_ok"], "installing it wrecked an unrelated task")
+        self.assertAlmostEqual(-100.0, out["harm_delta"])
+        self.assertEqual("NOT PROVEN", out["verdict"])
+
+    def test_the_harm_eval_is_held_out_of_the_primary_numbers(self):
+        """A dismal unrelated eval must not drag the thing being measured."""
+        none = {"a": True, "b": False}
+        skill = {"a": True, "b": True}
+        floor = {"z": False}
+        out = prereg.evaluate(self.ABSENT, benchmark(
+            run("without_skill", none, eval_name="main", n=1),
+            run("oracle", skill, eval_name="main", n=1),
+            run("with_skill", skill, eval_name="main", n=1),
+            run("without_skill", floor, eval_name="unrelated", n=1),
+            run("with_skill", floor, eval_name="unrelated", n=1)))
+        self.assertAlmostEqual(50.0, out["stats"]["without_skill"]["pooled"],
+                               msg="the unrelated eval leaked into the primary pool")
+        self.assertAlmostEqual(50.0, out["lift"])
+        self.assertTrue(out["harm_ok"])
+
+    def test_a_declared_harm_eval_that_never_ran_is_not_proven(self):
+        # Two discriminating expectations and full capture, so every other gate
+        # passes: an earlier version of this test cleared on `spread` instead
+        # and would have gone green with the harm gate deleted.
+        none = {"a": True, "b": False, "c": False}
+        skill = {"a": True, "b": True, "c": True}
+        out = prereg.evaluate(self.ABSENT, benchmark(
+            run("without_skill", none, eval_name="main", n=1),
+            run("oracle", skill, eval_name="main", n=1),
+            run("with_skill", skill, eval_name="main", n=1)))
+        self.assertTrue(out["lift_ok"])
+        self.assertTrue(out["spread_ok"])
+        self.assertTrue(out["captured_ok"])
+        self.assertFalse(out["harm_ok"], "an unrun harm check is an untested claim")
+        self.assertEqual("NOT PROVEN", out["verdict"])
+
+
 class Registration(unittest.TestCase):
     """The bar has to be in git, unmodified, and older than the numbers."""
 
