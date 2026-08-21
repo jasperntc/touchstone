@@ -1,0 +1,16 @@
+
+WHAT THE TEAM KNOWS ABOUT CERTIS
+
+Three things about this provider that are not written down in the codebase.
+
+1. A throttled call returns HTTP 200 with a body of
+   {"status": "throttled", "results": []}. It does not raise and it is not an
+   error response. That is the same shape as a holder Certis checked and found
+   nothing adverse about, so an empty results list on its own tells you
+   nothing; only "status" separates the two.
+
+2. verify() is not idempotent for a holder whose review_state is
+   "pending_review". Calling it again restarts that holder's review clock.
+
+3. A null score means the holder was not checked. It is not a score of zero and
+   it is not a failed check.
