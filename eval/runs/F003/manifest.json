@@ -1,0 +1,76 @@
+{
+  "run": "F003",
+  "samples": 5,
+  "cells": [
+    {
+      "code": "k7r",
+      "condition": "none",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/k7r",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/k7r/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "m2v",
+      "condition": "none",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/m2v",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/m2v/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "t9d",
+      "condition": "none",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/t9d",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/t9d/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "b4x",
+      "condition": "none",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/b4x",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/b4x/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "w6h",
+      "condition": "none",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/w6h",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/w6h/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "p3n",
+      "condition": "oracle",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/p3n",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/p3n/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "z8q",
+      "condition": "oracle",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/z8q",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/z8q/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "c5j",
+      "condition": "oracle",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/c5j",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/c5j/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "r1f",
+      "condition": "oracle",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/r1f",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/r1f/meridian/accounts/adjustments.py"
+    },
+    {
+      "code": "y7s",
+      "condition": "oracle",
+      "task": "t002",
+      "tree": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/y7s",
+      "answer": "C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/y7s/meridian/accounts/adjustments.py"
+    }
+  ]
+}
