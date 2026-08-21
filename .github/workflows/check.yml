@@ -1,0 +1,47 @@
+name: Check
+
+# Everything here is deterministic and free: no model is called, nothing is
+# spawned. The blind runs are the expensive part and they are recorded as
+# artifacts, not re-executed on push.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # test_the_hole_is_real reads history on purpose
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # A correct implementation must pass every check. When this fails the
+      # bug is in the key, not in the answer.
+      - name: The key accepts a correct answer
+        run: python3 eval/harness/run_checks.py --self-test
+
+      # And the naive draft must clear the functional floor while failing the
+      # discriminators. A task its naive draft aces cannot measure anything.
+      - name: The key can still say no
+        run: python3 eval/harness/run_checks.py --calibrate
+
+      # The README promises that a skill without a RESULT.md fails CI. This is
+      # the line that makes that true.
+      - name: Nothing unproven in skills/
+        run: python3 -m unittest tests.test_gates -v
+
+      # F002's `none/q4m` recovered the conventions with `git show`. These
+      # tests assert the hole is real and that the staged fixture closes it.
+      - name: The fixture is served outside every repository
+        run: python3 -m unittest tests.test_isolation -v
+
+      # Prose that states a rule is the answer key in disguise. Reported, not
+      # enforced -- code that demonstrates a convention is the point.
+      - name: Prose audit
+        run: python3 eval/harness/stage.py --audit
