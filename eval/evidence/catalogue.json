@@ -1,0 +1,287 @@
+{
+  "count": 31,
+  "by_status": {
+    "shipped-unmeasured": 31
+  },
+  "entries": [
+    {
+      "name": "access",
+      "description": "Manage Discord channel access \u2014 approve pairings, edit allowlists, set DM/group policy. Use when the user asks to pair, approve someone, check who's allowed, or change policy for the Discord channel. - Read - Write - Bash(ls *) - Bash(mkdir *)",
+      "source": "marketplaces/claude-plugins-official/external_plugins/discord",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "configure",
+      "description": "Set up the Discord channel \u2014 save the bot token and review access policy. Use when the user pastes a Discord bot token, asks to configure Discord, asks \"how do I set this up\" or \"who can reach me,\" or wants to check channel status. - Read - Write - Bash(ls *) - Bash(mkdir *)",
+      "source": "marketplaces/claude-plugins-official/external_plugins/discord",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "access",
+      "description": "Manage iMessage channel access \u2014 approve pairings, edit allowlists, set DM/group policy. Use when the user asks to pair, approve someone, check who's allowed, or change policy for the iMessage channel. - Read - Write - Bash(ls *) - Bash(mkdir *)",
+      "source": "marketplaces/claude-plugins-official/external_plugins/imessage",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "configure",
+      "description": "Check iMessage channel setup and review access policy. Use when the user asks to configure iMessage, asks \"how do I set this up\" or \"who can reach me,\" or wants to know why texts aren't reaching the assistant. - Read - Bash(ls *)",
+      "source": "marketplaces/claude-plugins-official/external_plugins/imessage",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "access",
+      "description": "Manage Telegram channel access \u2014 approve pairings, edit allowlists, set DM/group policy. Use when the user asks to pair, approve someone, check who's allowed, or change policy for the Telegram channel. - Read - Write - Bash(ls *) - Bash(mkdir *) - Bash(echo *)",
+      "source": "marketplaces/claude-plugins-official/external_plugins/telegram",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "configure",
+      "description": "Set up the Telegram channel \u2014 save the bot token and review access policy. Use when the user pastes a Telegram bot token, asks to configure Telegram, asks \"how do I set this up\" or \"who can reach me,\" or wants to check channel status. - Read - Write - Bash(ls *) - Bash(mkdir *) - Bash(echo *) - Bash(chmod *)",
+      "source": "marketplaces/claude-plugins-official/external_plugins/telegram",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "claude-automation-recommender",
+      "description": "Analyze a codebase and recommend Claude Code automations (hooks, subagents, skills, plugins, MCP servers). Use when user asks for automation recommendations, wants to optimize their Claude Code setup, mentions improving Claude Code workflows, asks how to first set up Claude Code for a project, or wants to know what Claude Code features they should use.",
+      "source": "marketplaces/claude-plugins-official/plugins/claude-code-setup",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "claude-md-improver",
+      "description": "Audit and improve CLAUDE.md files in repositories. Use when user asks to check, audit, update, improve, or fix CLAUDE.md files. Scans for all CLAUDE.md files, evaluates quality against templates, outputs quality report, then makes targeted updates. Also use when the user mentions \"CLAUDE.md maintenance\" or \"project memory optimization\".",
+      "source": "marketplaces/claude-plugins-official/plugins/claude-md-management",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "claude-security",
+      "description": "The Claude Security menu \u2014 pick a job: scan the codebase (the whole repository or a scoped part of it), scan changes (this branch's or a pull request's diff, or one commit), or suggest patches (findings turned into targeted patch files, each verified by a panel of agents, that you apply when you choose). - Read - Write - Glob - Grep - AskUserQuestion - Workflow - Workflow(claude-security:scan) - A",
+      "source": "marketplaces/claude-plugins-official/plugins/claude-security",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "cardputer-buddy",
+      "description": "Iterate on the Cardputer-Adv MicroPython app bundle (Claude Buddy, Snake, Hello) after the device is already provisioned via m5-onboard. Use when the user wants to add a new app, push a single changed .py without re-flashing, watch device serial logs, or run a one-shot REPL command. Trigger on \"add an app\", \"push to the cardputer\", \"tail the device\", \"run on the device\", or follow-up work after /m",
+      "source": "marketplaces/claude-plugins-official/plugins/cwc-makers",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "m5-onboard",
+      "description": "End-to-end onboarding for a freshly-plugged-in M5Stack ESP32 device (Cardputer, Cardputer-Adv, Core, CoreS3, Stick) \u2014 detect on USB, flash UIFlow 2.0 firmware, and install the Claude Buddy MicroPython app bundle. Use whenever the user plugs in or wants to flash/provision/reset an M5Stack or ESP32 board, or says \"m5-onboard go\".",
+      "source": "marketplaces/claude-plugins-official/plugins/cwc-makers",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "example-command",
+      "description": "An example user-invoked skill that demonstrates frontmatter options and the skills/<name>/SKILL.md layout",
+      "source": "marketplaces/claude-plugins-official/plugins/example-plugin",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "example-skill",
+      "description": "This skill should be used when the user asks to \"demonstrate skills\", \"show skill format\", \"create a skill template\", or discusses skill development patterns. Provides a reference template for creating Claude Code plugin skills.",
+      "source": "marketplaces/claude-plugins-official/plugins/example-plugin",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "frontend-design",
+      "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.",
+      "source": "marketplaces/claude-plugins-official/plugins/frontend-design",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "writing-hookify-rules",
+      "description": "This skill should be used when the user asks to \"create a hookify rule\", \"write a hook rule\", \"configure hookify\", \"add a hookify rule\", or needs guidance on hookify rule syntax and patterns.",
+      "source": "marketplaces/claude-plugins-official/plugins/hookify",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "math-olympiad",
+      "description": "\"Solve competition math problems (IMO, Putnam, USAMO, AIME) with adversarial verification that catches the errors self-verification misses. Activates when asked to 'solve this IMO problem', 'prove this olympiad inequality', 'verify this competition proof', 'find a counterexample', 'is this proof correct', or for any problem with 'IMO', 'Putnam', 'USAMO', 'olympiad', or 'competition math' in it. Us",
+      "source": "marketplaces/claude-plugins-official/plugins/math-olympiad",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "build-mcp-app",
+      "description": "This skill should be used when the user wants to build an \"MCP app\", add \"interactive UI\" or \"widgets\" to an MCP server, \"render components in chat\", build \"MCP UI resources\", make a tool that shows a \"form\", \"picker\", \"dashboard\" or \"confirmation dialog\" inline in the conversation, or mentions \"apps SDK\" in the context of MCP. Use AFTER the build-mcp-server skill has settled the deployment model,",
+      "source": "marketplaces/claude-plugins-official/plugins/mcp-server-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "build-mcp-server",
+      "description": "This skill should be used when the user asks to \"build an MCP server\", \"create an MCP\", \"make an MCP integration\", \"wrap an API for Claude\", \"expose tools to Claude\", \"make an MCP app\", or discusses building something with the Model Context Protocol. It is the entry point for MCP server development \u2014 it interrogates the user about their use case, determines the right deployment model (remote HTTP,",
+      "source": "marketplaces/claude-plugins-official/plugins/mcp-server-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "build-mcpb",
+      "description": "This skill should be used when the user wants to \"package an MCP server\", \"bundle an MCP\", \"make an MCPB\", \"ship a local MCP server\", \"distribute a local MCP\", discusses \".mcpb files\", mentions bundling a Node or Python runtime with their MCP server, or needs an MCP server that interacts with the local filesystem, desktop apps, or OS and must be installable without the user having Node/Python set ",
+      "source": "marketplaces/claude-plugins-official/plugins/mcp-server-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "playground",
+      "description": "Creates interactive HTML playgrounds \u2014 self-contained single-file explorers that let users configure something visually through controls, see a live preview, and copy out a prompt. Use when the user asks to make a playground, explorer, or interactive tool for a topic.",
+      "source": "marketplaces/claude-plugins-official/plugins/playground",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "agent-development",
+      "description": "This skill should be used when the user asks to \"create an agent\", \"add an agent\", \"write a subagent\", \"agent frontmatter\", \"when to use description\", \"agent examples\", \"agent tools\", \"agent colors\", \"autonomous agent\", or needs guidance on agent structure, system prompts, triggering conditions, or agent development best practices for Claude Code plugins.",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "command-development",
+      "description": "This skill should be used when the user asks to \"create a slash command\", \"add a command\", \"write a custom command\", \"define command arguments\", \"use command frontmatter\", \"organize commands\", \"create command with file references\", \"interactive command\", \"use AskUserQuestion in command\", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in com",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "hook-development",
+      "description": "This skill should be used when the user asks to \"create a hook\", \"add a PreToolUse/PostToolUse/Stop hook\", \"validate tool use\", \"implement prompt-based hooks\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"set up event-driven automation\", \"block dangerous commands\", or mentions hook events (PreToolUse, PostToolUse, Stop, SubagentStop, SessionStart, SessionEnd, UserPromptSubmit, PreCompact, Notification). Provides",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "mcp-integration",
+      "description": "This skill should be used when the user asks to \"add MCP server\", \"integrate MCP\", \"configure MCP in plugin\", \"use .mcp.json\", \"set up Model Context Protocol\", \"connect external service\", mentions \"${CLAUDE_PLUGIN_ROOT} with MCP\", or discusses MCP server types (SSE, stdio, HTTP, WebSocket). Provides comprehensive guidance for integrating Model Context Protocol servers into Claude Code plugins for ",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "plugin-settings",
+      "description": "This skill should be used when the user asks about \"plugin settings\", \"store plugin configuration\", \"user-configurable plugin\", \".local.md files\", \"plugin state files\", \"read YAML frontmatter\", \"per-project plugin settings\", or wants to make plugin behavior configurable. Documents the .claude/plugin-name.local.md pattern for storing plugin-specific configuration with YAML frontmatter and markdown ",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "plugin-structure",
+      "description": "This skill should be used when the user asks to \"create a plugin\", \"scaffold a plugin\", \"understand plugin structure\", \"organize plugin components\", \"set up plugin.json\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"add commands/agents/skills/hooks\", \"configure auto-discovery\", or needs guidance on plugin directory layout, manifest configuration, component organization, file naming conventions, or Claude Code pl",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "skill-development",
+      "description": "This skill should be used when the user wants to \"create a skill\", \"add a skill to plugin\", \"write a new skill\", \"improve skill description\", \"organize skill content\", or needs guidance on skill structure, progressive disclosure, or skill development best practices for Claude Code plugins.",
+      "source": "marketplaces/claude-plugins-official/plugins/plugin-dev",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "project-artifact",
+      "description": "Generate and publish a project status artifact \u2014 an opinionated, tabbed status page for a project too big for one update (overview & success criteria, the workstream sequence, next steps, plus background, plan, risks & open questions, and decisions/FAQ when they earn a tab) \u2014 published with the built-in Artifact tool to a default-private claude.ai page the user can share with teammates. Use when a",
+      "source": "marketplaces/claude-plugins-official/plugins/project-artifact",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "receipts",
+      "description": "Generate a personal Claude Code usage & impact report (\"receipts\") from this machine's local session transcripts \u2014 for justifying Claude Code usage/spend to a manager, self-review, or \"what have I been using this for\" check-ins. Mines ~/.claude/projects locally (no extra API calls beyond one final write-up), cross-references local git history, and writes a markdown report plus a self-contained HTM",
+      "source": "marketplaces/claude-plugins-official/plugins/receipts",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "session-report",
+      "description": "Generate an explorable HTML report of Claude Code session usage (tokens, cache, subagents, skills, expensive prompts) from ~/.claude/projects transcripts.",
+      "source": "marketplaces/claude-plugins-official/plugins/session-report",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    },
+    {
+      "name": "skill-creator",
+      "description": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.",
+      "source": "marketplaces/claude-plugins-official/plugins/skill-creator",
+      "kind": "plugin-skill",
+      "status": "shipped-unmeasured",
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "public": true
+    }
+  ]
+}
