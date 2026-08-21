@@ -165,3 +165,163 @@ last rescue. **The next attempt must be the last, and it must be pre-registered
 the same way.** If a fixture with no-git isolation and more than one
 discriminating convention still lands under +15, the collection's premise
 changes to information genuinely absent from the codebase, or it stops.
+
+---
+
+## F003 — the control found nine of the ten conventions. Both thresholds missed. Premise rejected.
+
+**2026-08-21. Ten blind `claude-opus-5` subagents, five per condition.** Both
+thresholds fixed in [prediction-F003.md](prediction-F003.md) before the run.
+
+| arm | functional | conventional |
+|---|---:|---:|
+| `none` — the task and the codebase | 10/10 (100%) | **44/50 (88.0%)** |
+| `oracle` — the same, plus the ten rules | 10/10 (100%) | **50/50 (100%)** |
+
+| threshold | required | measured | |
+|---|---|---:|---|
+| primary — pooled conventional lift | ≥ +15.0 | **+12.0** | MISSED |
+| secondary — conventions with a gap ≥ 40 | ≥ 2 | **1** | MISSED |
+
+**Rejected on both.** F002 was +12.5 and F003 is +12.0: two fixtures, three new conventions, a
+larger sample and a closed blindness hole, and essentially the same number.
+
+### Where the gap is, and it is one place
+
+| check | `none` | `oracle` | gap |
+|---|---:|---:|---:|
+| c1 micros · c2 triple · c3 codes · c4 no-raise · c5 audited | 100% | 100% | +0 |
+| c6 injected clock | 100% | 100% | **+0** |
+| c7 id shape | 80% | 100% | +20 |
+| c8 newest first | 100% | 100% | **+0** |
+| c9 capped at PAGE_LIMIT | 100% | 100% | **+0** |
+| c10 zero rows not listed | **0%** | **100%** | **+100** |
+
+Five of five oracles filtered zero-amount rows. Zero of five controls did. A
+clean split — and the only one on the board.
+
+C8 and C9 were the two conventions this fixture was rebuilt around, chosen as
+the "invisible" kind that F002's controls had missed. **Every control got both,
+five times out of five.** The legibility theory the fixture was designed on is
+wrong, or at least it was not what F002 was measuring.
+
+### The control did not fail to find C10. It found it and decided against it.
+
+Four of the five controls raised the zero-amount filter unprompted and gave
+reasons for rejecting it:
+
+> "the brief names only two exclusions and that filter is an undocumented
+> 3-of-26 minority" — `k7r`
+
+> "I deliberately did *not* filter the zero-amount `adj_32` row even though
+> several modules filter `amount_micros != 0`, because the brief named window
+> and account as the only exclusions" — `m2v`
+
+> "I deliberately did not copy the minority `amount_micros != 0` filter" — `b4x`
+
+That is not a discovery gap. Both arms knew the pattern existed; the arms
+differ in whether a rule was **asserted with authority**. What the oracle
+supplied was not information, it was standing — permission to override both the
+brief and the majority of the code.
+
+That may well be a real thing skills do. It is not the thing this repository
+set out to measure, and it is not "the skill saved you a search."
+
+### Three defects, all found by reading what the controls wrote
+
+**1. Four of the ten conventions were stated outright in module docstrings.**
+
+| file | docstring | states |
+|---|---|---|
+| `errors.py` | "Every failure in current Meridian code is one of these." | C3 |
+| `audit.py` | "Every current export wears one." | C5 |
+| `ids.py` | "Every current entry point validates through here." | C7 |
+| `clock.py` | "The only source of time in current Meridian code." | C6 |
+
+The controls quoted them back verbatim as justification — one followed
+`ids.valid` against a 22-of-25 local majority because "`ids.py` states it as the
+entry-point invariant". `--audit` existed precisely to catch this and reported
+the fixture **clean**, because its flag list was substrings of normative words
+— *always, never, must, convention* — and not one of these four contains one.
+They are universal-quantifier **declaratives**, a grammatical form the detector
+could not see at all. The substring list misses 4 of 4; the regexes that
+replaced it catch 4 of 4.
+
+These five docstrings are written by `main()` in the generator, so the
+"neutral prose only" fix applied to `current_module` after F002 never reached
+them. **The fixture has not been edited to remove them.** Retroactively
+changing the thing an experiment ran on is worse than recording what it was.
+
+**2. C8, C9 and C10 are not narrow conventions. They are minority patterns the
+majority of current code contradicts.** Of 27 current modules returning a row
+list, 5 sort, 5 cap and 3 filter zeros — so 22 return unsorted lists. "Narrow"
+was supposed to mean *demonstrated in few places*; it actually meant
+*contradicted in most places*. The brief tells both arms to match the codebase,
+and for these three the codebase's majority says don't. One oracle put it
+plainly: *"No existing module follows all ten conventions at once — the
+codebase is a mosaic where each file honors a subset."* A real codebase's
+conventions are the majority pattern in current code. This fixture inverted
+that, which flatters the oracle for a reason unrelated to skills.
+
+**3. C10 contradicts the brief.** The brief asks for the account's rows in the
+window; C10 removes some of them. Softening the wording — "are never included",
+"nothing to report" — was not enough, and three controls cited the brief by
+name when declining. **The single convention that discriminated is the single
+one that conflicts with the task description.** An instruction conflict is not a
+conventions gap.
+
+### The pre-registered failure mode that fired
+
+Written before the run, as the second of three ways this could fail:
+
+> The brief's new closing sentence does most of the work, and a control that
+> goes looking for conventions because it was told to finds all of them. That
+> would be a real and useful finding about prompts rather than skills.
+
+F002's controls missed ordering. F003's got it five times out of five. The
+fixture grew and the conventions changed, but the largest single difference
+between the two runs is one sentence added to the brief: *"Anything this brief
+does not pin down, match to the rest of the codebase."*
+
+**On this evidence, one sentence of prompt does most of what a conventions
+skill was supposed to do.** That is not a null result. It is a cheaper
+mechanism for the same outcome, and it is the most useful thing either fixture
+has produced.
+
+### Blindness, this time
+
+Held. The isolation fix worked and was independently confirmed: several
+subagents ran `git status` inside their tree and reported back that it was not
+a repository. Every one of the ten SOURCES sections disclaimed the internet,
+other directories, version control and recollection of a similar codebase. All
+ten staged trees were hash-verified against the fixture afterwards: 54 files
+each, byte-identical, the answer file the only addition.
+
+Requiring disclosure rather than hoping for it is the change that made this
+checkable. F002's breach surfaced because one subagent happened to volunteer
+it.
+
+### The decision, taken as written
+
+Both thresholds missed, so by the rule fixed before the run the premise is
+**rejected, not rescued**. Three fixtures, twenty-two blind subagents, and no
+run has cleared a bar set in advance.
+
+> **On this evidence, a skill that restates what is already in the codebase does
+> not beat no skill.** A frontier model reading the tree finds the conventions,
+> including ones demonstrated in 5 of 27 modules, and the only rule it will not
+> adopt unaided is one that contradicts its instructions.
+
+What this does not rule out, and what the collection's premise becomes:
+**information genuinely absent from the codebase.** An incident that produced a
+rule, a decision taken in a conversation, an operational limit that lives in a
+runbook, a contract with a repository the model cannot see. That is a different
+hypothesis, it is testable with these same instruments, and the F003 result
+points straight at it — the one convention the control refused was the one
+nothing in the code could justify strongly enough to override the brief.
+
+**What survives from three rejected fixtures is the apparatus**, which now
+catches: a fixture reachable by `git show`, a fixture whose docstrings state
+their own answers, a task whose naive draft passes, a task whose middle draft
+fails the wrong set, and a lift that is really one convention wearing a pooled
+average as a disguise. Every one of those was found the expensive way first.

@@ -49,6 +49,7 @@ from __future__ import annotations
 import argparse
 import ast
 import io
+import re
 import shutil
 import subprocess
 import sys
@@ -64,13 +65,36 @@ DEFAULT_OUT = REPO_ROOT.parent / "_touchstone_staging"
 NEVER_COPY = {"CONVENTIONS.md", "_build_meridian.py"}
 NEVER_COPY_DIRS = {".git", "__pycache__", ".pytest_cache"}
 
-# Terms that turn up when someone is DESCRIBING a rule rather than following
-# it. Deliberately broad: --audit reports, a human judges.
-PROSE_FLAGS = [
-    "convention", "house rule", "house style", "always ", "never ",
-    "must ", "should ", "by convention", "we use", "prefer ",
-    "newest first", "newest-first", "descending", "micros are",
-    "do not raise", "rule ",
+# Prose that DESCRIBES a rule rather than following it.
+#
+# The first version of this list was substrings -- "always ", "never ", "must ",
+# "convention" -- and it reported the fixture clean while five root modules
+# stated four of the ten conventions outright:
+#
+#     errors.py   "Every failure in current Meridian code is one of these."   C3
+#     audit.py    "Every current export wears one."                           C5
+#     ids.py      "Every current entry point validates through here."         C7
+#     clock.py    "The only source of time in current Meridian code."         C6
+#
+# Not one contains a normative word. They are universal-quantifier
+# DECLARATIVES, and in F003 the controls quoted them back verbatim as their
+# justification -- one followed ids.valid against a 22-of-25 local majority
+# because "ids.py states it as the entry-point invariant". A rule asserted in a
+# docstring is the answer key with a different typeface, and the old list was
+# blind to the entire grammatical form.
+#
+# Regexes now, and deliberately over-broad: --audit reports, a human judges. A
+# false positive costs one read; a false negative cost F003.
+PROSE_PATTERNS = [
+    (r"\bevery\b", "universal quantifier"),
+    (r"\ball\b\s+\w+\s+(are|is|use|uses|have|has|wear|wears|return|returns)",
+     "universal quantifier"),
+    (r"\bthe only\b|\bnothing else\b", "exclusivity claim"),
+    (r"\bnever\b|\balways\b", "normative"),
+    (r"\bmust\b|\bshould\b|\bis rejected\b|\bis a defect\b", "normative"),
+    (r"\bconvention|house (rule|style)", "names the concept"),
+    (r"\bnewest[- ]first\b|\bdescending\b", "states an ordering"),
+    (r"\bwe use\b|\bprefer\b|\bby convention\b", "normative"),
 ]
 
 
@@ -175,13 +199,11 @@ def audit(root: Path) -> int:
         if any(part in NEVER_COPY_DIRS for part in path.parts):
             continue
         for line, text in _prose(path):
-            low = text.lower()
-            for flag in PROSE_FLAGS:
-                if flag in low:
+            for pattern, why in PROSE_PATTERNS:
+                if re.search(pattern, text, re.I):
                     one = " ".join(text.split())
                     print("{}:{}  [{}]  {}".format(
-                        path.relative_to(root).as_posix(), line,
-                        flag.strip(), one[:110]))
+                        path.relative_to(root).as_posix(), line, why, one[:100]))
                     hits += 1
                     break
     if hits:

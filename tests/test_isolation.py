@@ -101,6 +101,45 @@ class Refusals(unittest.TestCase):
 
 
 class ProseAudit(unittest.TestCase):
+    # The four docstrings that leaked four of the ten conventions in F003.
+    # Not one contains a normative word, which is why the first version of the
+    # detector -- a substring list of always/never/must/convention -- reported
+    # the fixture clean while the controls were quoting these back verbatim as
+    # their justification.
+    LEAKED = [
+        ("errors.py", "Error codes. Every failure in current Meridian code is "
+                      "one of these."),
+        ("audit.py", "The audit decorator. Every current export wears one."),
+        ("ids.py", "Identifier shapes. Every current entry point validates "
+                   "through here."),
+        ("clock.py", "The only source of time in current Meridian code."),
+    ]
+
+    NEUTRAL = [
+        "Part of the payouts service.",
+        "Pre-2024 helper, kept for the migration window.",
+        "Adjustment rows. Written by the nightly import; do not edit by hand.",
+        "accounts.adjustments -- recent adjustments.",
+    ]
+
+    def _flagged(self, text):
+        import re
+        return any(re.search(pat, text, re.I) for pat, _ in staging.PROSE_PATTERNS)
+
+    def test_the_declarative_form_is_caught(self):
+        for name, text in self.LEAKED:
+            self.assertTrue(
+                self._flagged(text),
+                "{} states a convention and the detector does not see it: "
+                "{!r}".format(name, text))
+
+    def test_neutral_prose_is_left_alone(self):
+        for text in self.NEUTRAL:
+            self.assertFalse(
+                self._flagged(text),
+                "a detector that flags ordinary prose will be ignored: "
+                "{!r}".format(text))
+
     def test_audit_reads_prose_and_not_code(self):
         with tempfile.TemporaryDirectory(prefix="touchstone-audit-") as tmp:
             f = Path(tmp) / "m.py"

@@ -1,0 +1,182 @@
+{
+  "k7r": {
+    "condition": "none",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": false
+    }
+  },
+  "m2v": {
+    "condition": "none",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": false
+    }
+  },
+  "t9d": {
+    "condition": "none",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": false,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": false
+    }
+  },
+  "b4x": {
+    "condition": "none",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": false
+    }
+  },
+  "w6h": {
+    "condition": "none",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": false
+    }
+  },
+  "p3n": {
+    "condition": "oracle",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": true
+    }
+  },
+  "z8q": {
+    "condition": "oracle",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": true
+    }
+  },
+  "c5j": {
+    "condition": "oracle",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": true
+    }
+  },
+  "r1f": {
+    "condition": "oracle",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": true
+    }
+  },
+  "y7s": {
+    "condition": "oracle",
+    "import_error": null,
+    "checks": {
+      "f_selects_the_right_rows": true,
+      "f_missing_rows_is_a_failure": true,
+      "c1_amounts_are_micros": true,
+      "c2_returns_a_triple": true,
+      "c3_errors_are_codes": true,
+      "c4_never_raises": true,
+      "c5_audited_and_exported": true,
+      "c6_uses_an_injected_clock": true,
+      "c7_validates_id_shape": true,
+      "c8_newest_first": true,
+      "c9_capped_at_page_limit": true,
+      "c10_zero_rows_are_not_listed": true
+    }
+  }
+}
