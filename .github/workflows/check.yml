@@ -54,6 +54,17 @@ jobs:
       - name: The gates skill-creator does not have
         run: python3 -m unittest tests.test_prereg -v
 
+      # A recommender draws on a catalogue it mostly does not own. The one
+      # thing only this repository can add is what was measured about each
+      # entry -- so nothing may claim proven-here without a RESULT.md naming a
+      # control. The check caught its own matcher labelling all 31 marketplace
+      # skills as ours on the first run.
+      - name: Nothing claims evidence it does not have
+        run: python3 tools/catalogue.py --check
+
+      - name: Catalogue regression tests
+        run: python3 -m unittest tests.test_catalogue -v
+
       # Prose that states a rule is the answer key in disguise. Reported, not
       # enforced -- code that demonstrates a convention is the point.
       - name: Prose audit

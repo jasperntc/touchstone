@@ -77,6 +77,39 @@ disguise. Each was found the expensive way first.
 
 Full write-up: [docs/findings.md](docs/findings.md).
 
+## If `skills/` is empty, what gets recommended?
+
+Other people's work, and that was always the design. `skills/` is the shelf for
+skills **this repository has proven**; it is not the catalogue. The catalogue is
+the 31 skills in the official plugin marketplace, the built-in Anthropic skills,
+and whatever `SearchSkills` finds in an org catalogue. A recommender does not
+need to own a skill to point at one.
+
+Recommending is already solved upstream — `claude-automation-recommender` in the
+`claude-code-setup` plugin scans a codebase and suggests skills, plugins, hooks,
+subagents and MCP servers, and the harness ships `SearchSkills` /
+`SuggestSkills` / `SearchPlugins` / `SuggestPluginInstall`. Three things are not
+solved, and they are what `tools/catalogue.py` adds:
+
+- **No recommendation anywhere carries evidence.** "Recommended: X" reads the
+  same whether X beat a control, was never measured, or was measured and found
+  to do nothing. This is the only place those measurements exist.
+- **The upstream lists are hand-maintained markdown** and go stale silently.
+  This scans what is actually installed.
+- **Negative results have nowhere to live.** 116 blind subagents found no effect
+  from the 270 agency-agents bodies; without a field for that, the next person
+  rediscovers it.
+
+| label | means |
+|---|---|
+| `proven-here` | beat a control in a blind run, `RESULT.md` names it. **Currently: 0** |
+| `shipped-unmeasured` | widely used, not measured here. **Currently: 31** |
+| `measured-no-effect` | measured here, no effect found |
+| `unproven` | everything else, and the default |
+
+A label says who measured what against which control. It is not a ranking, and
+`shipped-unmeasured` is the honest label for most good software.
+
 ## Layout
 
     skills/       proven only: SKILL.md + eval/ + RESULT.md

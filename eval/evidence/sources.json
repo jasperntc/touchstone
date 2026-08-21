@@ -1,0 +1,38 @@
+{
+  "_comment": [
+    "Where a candidate came from, and what is known about it. First match wins,",
+    "so order is meaningful. `public` decides whether an entry may appear in the",
+    "committed catalogue -- this repository is public and what is installed on a",
+    "machine is not.",
+    "",
+    "A status says who measured what against which control. It is not a ranking.",
+    "`shipped-unmeasured` is the honest label for most good software."
+  ],
+  "sources": [
+    {
+      "match": "skills/",
+      "status": "proven-here",
+      "requires_result": true,
+      "public": true,
+      "citation": "beat a control in a blind run recorded in RESULT.md"
+    },
+    {
+      "match": "candidates/",
+      "status": "unproven",
+      "public": true,
+      "citation": "drafted or imported, never measured"
+    },
+    {
+      "match": "quarry/",
+      "status": "measured-no-effect",
+      "public": true,
+      "citation": "agency-agents: 116 blind subagents across two model tiers found no measurable effect from these bodies; selection/routing over them did work, 57/58"
+    },
+    {
+      "match": "marketplaces/claude-plugins-official/",
+      "status": "shipped-unmeasured",
+      "public": true,
+      "citation": "Anthropic official marketplace; widely used, not independently measured here"
+    }
+  ]
+}
