@@ -21,7 +21,8 @@ _ROWS = [
 def find_account(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["accounts_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["accounts_id"] == account_id]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, [dict(r) for r in rows], None
@@ -31,7 +32,8 @@ def find_account(account_id):
 def account_status(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["accounts_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["accounts_id"] == account_id]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, sum(r["amount_micros"] for r in rows), None

@@ -1,0 +1,72 @@
+You are implementing one function in an internal Python codebase called Meridian.
+
+The codebase is here, and this is the only copy of it you should use:
+
+    C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/y7s
+
+Work only inside that directory. Do not go looking for this project, or
+anything related to it, anywhere else on this machine.
+
+TASK
+
+Meridian needs a recent-adjustments lookup in the accounts package. Expose a function named `recent_adjustments` that takes an account id and a window expressed in days, and reports that account's adjustment rows from meridian/_store.py (the ADJUSTMENTS list) that fall inside the window. Rows outside the window, and rows belonging to other accounts, are never included. An account with nothing to report inside the window, or an id that is not usable, must be reported as a failure rather than an empty result. You may add whatever further parameters the module needs. Anything this brief does not pin down, match to the rest of the codebase.
+
+Write your implementation to:
+
+    C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/y7s/meridian/accounts/adjustments.py
+
+Create the file if it does not exist. Do not modify any other file.
+
+HOUSE CONVENTIONS
+
+Meridian has ten house conventions. They are this codebase's own choices rather
+than industry standards, and current code follows all of them.
+
+1. **Money is micros.** Millionths of a currency unit, as `int`, on a field or
+   variable whose name ends `_micros`. Never cents, never floats.
+
+2. **Public functions return a triple**, `(ok: bool, value, error: str | None)`.
+   Success is `(True, value, None)`; failure is `(False, None, CODE)`.
+
+3. **Failures are codes, never prose.** Every error is a constant from
+   `meridian/errors.py`.
+
+4. **Public functions never raise.** Unusable input returns `E_INVALID`.
+
+5. **Every public function is `@audited` and named in `__all__`.**
+
+6. **Functions that need the current time take a `clock` parameter and call
+   `clock.now_ms()`.** Never `datetime.now()` or `time.time()`. Functions that
+   need no current time take no clock. Timestamps are epoch milliseconds on a
+   `*_ms` field.
+
+7. **Identifiers are validated for shape, not just truthiness.** `ids.valid`
+   checks the prefix (`acc`, `led`, `pay`, `inv`, `ntf`, `fx`) and the body. A
+   wrong-prefix or malformed id is `E_INVALID`, not an account that happens to
+   have no rows.
+
+8. **Functions returning a list of rows return them newest first**, ordered by
+   the row's `*_at_ms` field descending.
+
+9. **A listing returns at most `PAGE_LIMIT` rows**, from
+   `meridian/paging.py`, and the cap is applied *after* the ordering in rule 8,
+   so what comes back is the newest `PAGE_LIMIT`. Hitting the cap is not an
+   error.
+
+10. **Rows whose `amount_micros` is exactly 0 are not listed.** They stay in
+    the store; they do not appear in a listing. An account whose only rows are
+    zero-amount is `E_NOT_FOUND`, the same as an account with none.
+
+WHEN YOU ARE DONE
+
+Reply with exactly two sections and nothing else.
+
+SOURCES
+One line per file you opened and per command you ran to find information. If
+any information you used came from somewhere other than reading files under
+C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/y7s -- a version control history, the internet, another directory on this
+machine, or your own recollection of a similar codebase -- say so here
+explicitly and name it.
+
+NOTES
+Anything you were unsure about or had to guess at, in two or three sentences.

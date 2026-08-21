@@ -6,14 +6,21 @@ from __future__ import annotations
 
 from ..audit import audited
 from ..errors import E_INVALID, E_NOT_FOUND
+from ..paging import PAGE_LIMIT
 
 __all__ = ['payouts_for', 'payout_by_id']
 
 _ROWS = [
     {"id": "pay_0", "payouts_id": "acc_100", "amount_micros": 1250000, "created_at_ms": 1720000000000},
     {"id": "pay_1", "payouts_id": "acc_101", "amount_micros": 2500000, "created_at_ms": 1720003600000},
-    {"id": "pay_2", "payouts_id": "acc_102", "amount_micros": 3750000, "created_at_ms": 1720007200000},
-    {"id": "pay_3", "payouts_id": "acc_100", "amount_micros": 5000000, "created_at_ms": 1720010800000},
+    {"id": "pay_2", "payouts_id": "acc_100", "amount_micros": 3750000, "created_at_ms": 1720007200000},
+    {"id": "pay_3", "payouts_id": "acc_101", "amount_micros": 5000000, "created_at_ms": 1720010800000},
+    {"id": "pay_4", "payouts_id": "acc_100", "amount_micros": 6250000, "created_at_ms": 1720014400000},
+    {"id": "pay_5", "payouts_id": "acc_101", "amount_micros": 7500000, "created_at_ms": 1720018000000},
+    {"id": "pay_6", "payouts_id": "acc_100", "amount_micros": 8750000, "created_at_ms": 1720021600000},
+    {"id": "pay_7", "payouts_id": "acc_101", "amount_micros": 10000000, "created_at_ms": 1720025200000},
+    {"id": "pay_8", "payouts_id": "acc_100", "amount_micros": 11250000, "created_at_ms": 1720028800000},
+    {"id": "pay_9", "payouts_id": "acc_101", "amount_micros": 12500000, "created_at_ms": 1720032400000},
 ]
 
 
@@ -21,8 +28,10 @@ _ROWS = [
 def payouts_for(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["payouts_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["payouts_id"] == account_id]
     rows.sort(key=lambda r: r["created_at_ms"], reverse=True)
+    rows = rows[:PAGE_LIMIT]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, [dict(r) for r in rows], None
@@ -32,8 +41,10 @@ def payouts_for(account_id):
 def payout_by_id(account_id):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["payouts_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["payouts_id"] == account_id]
     rows.sort(key=lambda r: r["created_at_ms"], reverse=True)
+    rows = rows[:PAGE_LIMIT]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, sum(r["amount_micros"] for r in rows), None

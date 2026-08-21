@@ -245,10 +245,60 @@ def calibrate() -> int:
     return 0
 
 
+def drafts() -> int:
+    """Score all three calibration drafts and require the middle one to be exact.
+
+    --self-test proves the ceiling is reachable and --calibrate proves the
+    floor is not the ceiling. Neither notices the failure that actually
+    threatens this fixture: a narrow convention quietly becoming visible in
+    the package the task lives in, which would leave every gate green while
+    silently turning the experiment into a different one.
+
+    So the partial draft -- a model that read accounts/ and nothing else --
+    must fail EXACTLY the narrow set. Not a subset, not a superset.
+    """
+    rows, problems = [], []
+    for name in ("reference", "partial", "naive"):
+        for tid, result in run_set(REPO_ROOT / "eval" / name).items():
+            kinds = by_kind(result)
+            func = kinds.get("functional", {"passed": 0, "total": 0, "failed": []})
+            conv = kinds.get("conventional", {"passed": 0, "total": 0, "failed": []})
+            rows.append((name, tid, func, conv))
+            print(f"  {name:<10} {tid}  functional {func['passed']}/{func['total']}"
+                  f"   conventional {conv['passed']}/{conv['total']}")
+            if func["failed"]:
+                problems.append(f"{name}/{tid} fails a functional check "
+                                f"({', '.join(func['failed'])}); the floor must be "
+                                f"reachable without knowing the conventions")
+            if name == "reference" and conv["failed"]:
+                problems.append(f"reference/{tid} fails {conv['failed']}")
+            if name == "naive" and conv["passed"]:
+                problems.append(f"naive/{tid} passes {conv['passed']} conventional "
+                                f"check(s) without being told anything")
+            if name == "partial":
+                expected = set(load_key(tid).NARROW)
+                got = set(conv["failed"])
+                if got != expected:
+                    problems.append(
+                        f"partial/{tid} fails {sorted(got)}; the narrow set is "
+                        f"{sorted(expected)}. Extra means a wide convention is "
+                        f"not actually wide; missing means a narrow one is "
+                        f"reachable from inside the task's own package.")
+    if problems:
+        print()
+        for p in problems:
+            print(f"FAILED: {p}", file=sys.stderr)
+        return 1
+    print("\nPASSED: the instrument reads at three levels and the "
+          "partial draft fails exactly the narrow set.")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--calibrate", action="store_true")
+    ap.add_argument("--drafts", action="store_true")
     ap.add_argument("--answer", metavar="PATH")
     ap.add_argument("--task", metavar="ID", default="t001")
     ap.add_argument("--conditions", action="store_true")
@@ -262,6 +312,8 @@ def main() -> int:
         return self_test()
     if args.calibrate:
         return calibrate()
+    if args.drafts:
+        return drafts()
     if args.answer:
         result = score(Path(args.answer), args.task)
         print(json.dumps({"task": args.task, "by_kind": by_kind(result),

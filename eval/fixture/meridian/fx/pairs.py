@@ -22,7 +22,8 @@ _ROWS = [
 def pair_exists(account_id):
     if not valid("acc", account_id):
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["fx_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["fx_id"] == account_id]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, [dict(r) for r in rows], None
@@ -32,7 +33,8 @@ def pair_exists(account_id):
 def pairs_for(account_id):
     if not valid("acc", account_id):
         return False, None, E_INVALID
-    rows = [r for r in _ROWS if r["fx_id"] == account_id]
+    rows = [r for r in _ROWS
+            if r["fx_id"] == account_id]
     if not rows:
         return False, None, E_NOT_FOUND
     return True, sum(r["amount_micros"] for r in rows), None

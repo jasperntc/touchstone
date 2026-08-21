@@ -22,7 +22,8 @@ def next_payout_at_ms(account_id, clock):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
     cutoff_ms = clock.now_ms() - 86_400_000
-    rows = [r for r in _ROWS if r["payouts_id"] == account_id
+    rows = [r for r in _ROWS
+            if r["payouts_id"] == account_id
             and r["created_at_ms"] >= cutoff_ms]
     if not rows:
         return False, None, E_NOT_FOUND
@@ -34,7 +35,8 @@ def payouts_due(account_id, clock):
     if not isinstance(account_id, str) or not account_id:
         return False, None, E_INVALID
     cutoff_ms = clock.now_ms() - 86_400_000
-    rows = [r for r in _ROWS if r["payouts_id"] == account_id
+    rows = [r for r in _ROWS
+            if r["payouts_id"] == account_id
             and r["created_at_ms"] >= cutoff_ms]
     if not rows:
         return False, None, E_NOT_FOUND

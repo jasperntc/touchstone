@@ -37,6 +37,46 @@ tell "the skill adds nothing" from "nothing could have added anything."
 The first fixture built here failed that rule on day one, in six subagents.
 Working as intended.
 
+## What three fixtures measured
+
+Twenty-two blind subagents across three fixtures, each with its threshold
+committed to git before the run. None cleared it.
+
+| | fixture | subagents | oracle lift | verdict |
+|---|---|---:|---:|---|
+| F001 | 6 files | 6 | **-26.7** | rejected |
+| F002 | 52 files, 8 conventions | 6 | +12.5 vs +15 | rejected |
+| F003 | 54 files, 10 conventions | 10 | +12.0 vs +15 | rejected |
+
+> **On this evidence, a skill that restates what is already in the codebase
+> does not beat no skill.**
+
+In F003 the control scored 88% on ten house conventions it was told nothing
+about, including two demonstrated in 5 of 27 modules. The single rule it
+declined was the one that contradicted its instructions — and four of five
+controls named that rule explicitly and gave reasons for rejecting it. They did
+not fail to find it. They found it and judged against it.
+
+The largest single difference between F002, whose controls missed the ordering
+rule, and F003, whose controls got it five times out of five, is one sentence
+added to the task: *"anything this brief does not pin down, match to the rest
+of the codebase."* **One line of prompt did most of what a conventions skill
+was supposed to do.**
+
+So the premise changes, as [prediction-F003.md](docs/prediction-F003.md)
+committed it would: to **information genuinely absent from the codebase** —
+an incident that produced a rule, a decision taken in conversation, an
+operational limit in a runbook, a contract with a repository the model cannot
+see. Same instruments, different hypothesis.
+
+What survives from three rejected fixtures is the apparatus. It now catches a
+fixture reachable by `git show`, a fixture whose docstrings state their own
+answers, a task its naive draft passes, a task whose middle draft fails the
+wrong set, and a lift that is one convention wearing a pooled average as a
+disguise. Each was found the expensive way first.
+
+Full write-up: [docs/findings.md](docs/findings.md).
+
 ## Layout
 
     skills/       proven only: SKILL.md + eval/ + RESULT.md
@@ -67,4 +107,12 @@ python eval/harness/run_checks.py --self-test
 
 ```bash
 python eval/harness/run_checks.py --calibrate
+```
+
+```bash
+python eval/harness/run_checks.py --drafts
+```
+
+```bash
+python eval/harness/stage.py --audit
 ```
