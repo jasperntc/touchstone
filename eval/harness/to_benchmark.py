@@ -17,14 +17,16 @@ exist upstream.
 
 WHICH CHECKS BECOME THE PRIMARY NUMBERS, AND WHY IT IS NOT ALL OF THEM
 
-docs/design-F004.md pre-registered the +40 bar "on the absent checks", so the
-`t004` eval this emits carries the ABSENT checks only.
+The registration names the held-out harm eval; every OTHER task is primary,
+and a primary eval carries the ABSENT checks only, because the design docs
+pre-registered the bar "on the absent checks".
 
-That is not a convenience. Pooling all eight t004 checks would put the oracle
-at 8/8 and the control at 5/8 -- a lift of +37.5, under the registered +40 --
-while the absent checks themselves run 0% against 100%. The pooled number would
-fail the task for a reason that has nothing to do with the task: it would be
-measuring how many easy checks were bundled alongside the hard ones.
+That is not a convenience, and getting it wrong is not hypothetical. F005 was
+first scored with the primary task hardcoded to a name that no longer existed,
+so all nine of its checks were pooled: a +100 absent lift came out as +33.3 and
+failed a +40 bar. The pooled figure was measuring how many easy checks were
+bundled beside the hard ones. The harm eval's name now comes from the
+registration so the two cannot drift apart.
 
 The functional and conventional checks are the sanity floor. They are graded,
 written to `floor.json` next to the benchmark, and summarised on stdout. A
@@ -63,8 +65,28 @@ def _show(path: Path) -> str:
         return str(path)
 
 
-def build(staging: Path, assign: dict, out: Path):
+def build(staging: Path, assign: dict, out: Path, harm_task: str):
+    """`harm_task` names the held-out eval; every other task is primary.
+
+    This used to read `task["task"] != "t004"`, hardcoded. When t004 was
+    retired and t005 replaced it, EVERY task matched that condition, so the
+    primary eval was emitted with all nine checks pooled instead of the three
+    absent ones -- diluting a +100 absent lift down to +33.3 and failing a bar
+    of +40 that docs/design-F004.md had pre-registered against the absent
+    checks specifically.
+
+    The harm eval's name now comes from the registration, so the two can never
+    drift apart again.
+    """
     tasks = rc.load_tasks()
+    known = {t["task"] for t in tasks}
+    if harm_task not in known:
+        raise SystemExit(
+            "harm eval {!r} is not in tasks.jsonl ({}). Refusing to guess "
+            "which eval is primary -- guessing is what produced the wrong "
+            "verdict last time.".format(harm_task, ", ".join(sorted(known))))
+    if len(known) < 2:
+        raise SystemExit("only one task defined, so there is no held-out eval")
     runs, floor_rows, per_config = [], [], {}
 
     for code, config in sorted(assign.items()):
@@ -79,7 +101,7 @@ def build(staging: Path, assign: dict, out: Path):
                               package=task["package"], module=task["module"])
             key = rc.load_key(task["task"])
             kinds = {c["id"]: c["kind"] for c in key.CHECKS}
-            is_harm = task["task"] != "t004"
+            is_harm = task["task"] == harm_task
 
             # The harm eval is graded whole -- the question there is whether
             # installing the skill moved anything, not which kind moved.
@@ -150,10 +172,21 @@ def main() -> int:
     ap.add_argument("--assign", required=True,
                     help="JSON mapping staged directory name -> configuration")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--prereg", required=True,
+                    help="run id whose registration names the harm eval")
     args = ap.parse_args()
     assign = json.loads(Path(args.assign).read_text(encoding="utf-8"))
+    spec_path = REPO_ROOT / "eval" / "prereg" / (args.prereg + ".json")
+    if not spec_path.exists():
+        raise SystemExit("no registration at {}".format(spec_path))
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    harm = spec.get("harm_eval") or ""
+    if not harm:
+        raise SystemExit(
+            "{} declares no harm_eval, so there is no way to tell which eval "
+            "is primary.".format(spec_path.name))
     return build(Path(args.staging).resolve(), assign,
-                 Path(args.out).resolve())
+                 Path(args.out).resolve(), harm)
 
 
 if __name__ == "__main__":

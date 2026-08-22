@@ -48,6 +48,7 @@ committed to git before the run. None cleared it.
 | F002 | 52 files, 8 conventions | 6 | +12.5 vs +15 | rejected |
 | F003 | 54 files, 10 conventions | 10 | +12.0 vs +15 | rejected |
 | F004 | absent information | 15 | +53.3 vs +40 | **skill not proven** |
+| F005 | leaks repaired, skill v2 | 15 | +100.0 vs +40 | **skill not proven** |
 
 > **On this evidence, a skill that restates what is already in the codebase
 > does not beat no skill.**
@@ -72,8 +73,25 @@ never mentions.
 > model does while it is loaded**, and the more vividly it argues its case, the
 > further that bias reaches.
 
-That is why `skills/` is still empty, and why the gate that caught it is the
-part of this repository worth keeping.
+F005 repaired two leaks in that fixture — the control now scores **0% on all
+three** withheld facts, against 40–100% before — and rewrote the skill in flat,
+explicitly scoped prose. The skill delivered **100%**, the vivid-prose harm
+disappeared entirely, and the run still failed the harm gate at −8.3, because
+the *fix* caused a different one.
+
+The skill now ends with a scope paragraph disclaiming any view on pagination
+and ordering, and telling the reader to follow the codebase's own conventions.
+On the unrelated task, `ids.valid` usage fell from 5/5 to **1/5** and sorting
+from 5/5 to **3/5** — because "follow the codebase's conventions" points at the
+majority pattern rather than the invariant the codebase states about itself,
+and naming a topic to disclaim it puts the topic in play.
+
+> **A scope disclaimer is not neutral.** Two skill versions, opposite prose
+> styles, opposite failure modes, both outside tolerance.
+
+That is why `skills/` is still empty, and why the gate that caught it — which
+no other skill-evaluation framework has — is the part of this repository worth
+keeping.
 
 In F003 the control scored 88% on ten house conventions it was told nothing
 about, including two demonstrated in 5 of 27 modules. The single rule it

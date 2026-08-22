@@ -457,3 +457,139 @@ what `skill-creator`'s iterate loop is for. The next version should carry the
 same three facts in flatter prose, scoped explicitly to Certis, and be measured
 against the same four gates — with a1 and a3 repaired first, since two of the
 three discriminators in this run were not testing what they claimed.
+
+---
+
+## F005 — the leaks closed, the skill beat the oracle, and the fix for the harm caused a different harm. Not proven.
+
+**2026-08-22. Fifteen blind `claude-opus-5` subagents, five per arm.** Same four
+gates as F004, deliberately unchanged. An earlier attempt was killed by a spend
+limit at 4/5 controls and 0/5 in both treatment arms; it was recorded as
+[aborted](../eval/runs/F005/ABORTED.md) and not scored.
+
+| arm | absent checks |
+|---|---:|
+| `without_skill` | **0/15 (0%)** |
+| `oracle` | 11/15 (73.3%) |
+| `with_skill` | **15/15 (100%)** |
+
+| gate | bar | measured | |
+|---|---|---:|---|
+| task validity | ≥ +40 | **+73.3** | ok |
+| lift | ≥ +40 | **+100.0** | MET |
+| spread | ≥ 2 | **3** | MET |
+| capture | ≥ 70% | **136%** | MET |
+| **no harm** | ≥ −5 | **−8.3** | **REGRESSED** |
+
+**NOT PROVEN**, on the same gate as F004 — but for a completely different
+reason, and that is the finding.
+
+### The repairs worked
+
+F004's a1 measured +0 because the client docstring read `{"status": "ok", ...}`
+and every control checked `status` unprompted. F004's a3 measured +60 through
+an ambiguity in a two-outcome vocabulary. With `status` removed from the
+documented shape and a third outcome added:
+
+| | F004 | F005 |
+|---|---:|---:|
+| a1 throttled | +0 | **+100** |
+| a2 pending_review | +100 | **+100** |
+| a3 null score | +60 | **+100** |
+
+**All three facts are now genuinely absent: the control scored 0% on every one
+of them, in all five samples.** Four of five controls never looked for `status`
+at all, against five of five that did in F004. That is what removing an example
+value from a docstring is worth.
+
+### The skill beat the oracle, and that is a wording defect, not a triumph
+
+`with_skill` 100%, `oracle` 73.3%, so capture reads **136%**. It is not evidence
+that packaging beats facts. The oracle text says *"verify() is not idempotent…
+**calling it again** restarts that holder's review clock"*, and **four of five
+oracle samples read "again" as "twice in one pass"** — memoising or capping at
+one call rather than not calling. Skill v2 says *"Filter them out before
+calling."*
+
+The two treatments were not informationally equivalent on a2. The skill carried
+a directive the oracle only implied. Any capture figure above 100% here is
+measuring my oracle wording, and the fix is to make the oracle state the
+consequence as plainly as the skill does.
+
+One oracle sample also failed two functional checks by treating *any* present
+`status` key as unverifiable, so `status: ok` bodies came back unverified. The
+sanity floor caught it and it is included above, unweighted.
+
+### The harm moved instead of shrinking
+
+−13.3 in F004, −8.3 in F005. Still outside tolerance, and composed of entirely
+different checks.
+
+| | `none` | `oracle` | `skill` | F004 skill |
+|---|---:|---:|---:|---:|
+| c7 id-shape validation | 100% | 100% | **20%** | 80% |
+| c8 newest-first | 100% | 100% | **60%** | 20% |
+| c9 capped at PAGE_LIMIT | 20% | 40% | 40% | **0%** |
+
+**F004's harm is gone.** The paging collapse that ran 3/5 → 2/5 → 0/5 is now
+1/5 → 2/5 → 2/5: the skill arm pages *more* than the control. Removing the
+vivid prose removed the disposition it installed.
+
+**And a new harm appeared, caused by the fix.** On the unrelated task:
+
+    arm             ids.valid   sorts   PAGE_LIMIT
+    without_skill        5/5     5/5          1/5
+    oracle               5/5     5/5          2/5
+    with_skill           1/5     3/5          2/5
+
+Skill v2 closes with a scope paragraph added specifically to stop spillover:
+
+> They are not a general position on error handling, on **pagination**, on
+> **ordering**, or on when to return partial results. **Follow this codebase's
+> own conventions for all of that.**
+
+Both halves backfired. *"Follow this codebase's own conventions"* points at the
+**majority pattern** — `isinstance`, used by 24 of 27 modules — and away from
+the **stated invariant** in `ids.py` that the key grades, so `ids.valid` fell
+from 5/5 to 1/5. And naming *ordering* as something the skill has no view on
+appears to have made ordering feel discretionary: sorting fell from 5/5 to 3/5.
+
+> **A scope disclaimer is not neutral. Naming a topic in order to disclaim it
+> still puts the topic in play**, and telling a model to follow "the codebase's
+> conventions" tells it to follow the majority, which is not always what the
+> codebase says about itself.
+
+### An instrument bug, caught after it had produced a verdict
+
+F005 was first scored with `is_harm = task["task"] != "t004"` hardcoded in the
+adapter. t004 had been retired and replaced by t005, so **every** task matched,
+the primary eval was emitted with all nine checks pooled rather than the three
+absent ones, and a +100 absent lift came out as **+33.3 — failing a +40 bar.**
+
+The verdict flipped on a hardcoded string, and the wrong verdict was the one I
+saw first.
+
+The correction is legitimate but it must be shown, not asserted: the bar was
+registered "on the absent checks" in `design-F004.md:143`, and the adapter's own
+docstring said it emitted absent checks only. Both were committed at
+`6322933`, 03:15; t005 landed at `5f583a0`, 13:56, ten hours later. The
+pre-registration is older than the bug, so this is implementing what was
+registered rather than moving a bar — but **both numbers are recorded here**
+because a correction made after seeing a failing result has to be checkable.
+
+The adapter now reads the harm eval's name from the registration, and a test
+fails if any task id is compared in adapter logic again. Mutation-checked.
+
+### Standing
+
+Four gates cleared. The premise is not in doubt: the information is decisive,
+the packaging delivers it, and two runs now agree on that. What neither version
+of the skill has managed is to sit in a context without changing unrelated
+work — and the two failures had **opposite causes**, one from arguing too
+vividly and one from disclaiming too explicitly.
+
+The next version should carry the three facts with neither the argument nor the
+scope paragraph, and be measured against the same four gates. If harm persists
+a third time with the prose stripped to bare facts, the honest conclusion is
+that **loading any skill costs something on unrelated work**, and the question
+becomes what an acceptable price is rather than how to reach zero.
