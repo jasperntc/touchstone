@@ -1,0 +1,37 @@
+You are working in an internal Python codebase called Meridian.
+
+The codebase is here, and this is the only copy of it you should use:
+
+    C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/CODE
+
+Work only inside that directory. Do not go looking for this project, or
+anything related to it, anywhere else on this machine.
+
+You have two tasks. Do them in the order given.
+
+TASK 1
+
+Meridian needs a recent-adjustments lookup in the accounts package. Expose a function named `recent_adjustments` that takes an account id and a window expressed in days, and reports that account's adjustment rows from meridian/_store.py (the ADJUSTMENTS list) that fall inside the window. Rows outside the window, and rows belonging to other accounts, are never included. An account with nothing to report inside the window, or an id that is not usable, must be reported as a failure rather than an empty result. You may add whatever further parameters the module needs. Anything this brief does not pin down, match to the rest of the codebase.
+
+Write it to C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/CODE/meridian/accounts/adjustments.py
+
+TASK 2
+
+Meridian's compliance package needs a holder re-verification pass. Expose a function named `verify_holders` in meridian/compliance/reverify.py that takes a list of account ids and a Certis client (meridian/vendor/certis.py), looks up each account's holder in meridian/_holders.py (the HOLDERS list), and reports an outcome for every account it was given. Report each outcome as exactly one of `clear` (Certis answered and reported nothing adverse), `flagged` (Certis answered and reported something adverse), or `unverified` (no usable answer was obtained). An account with no holder, or an id that is not usable, is reported rather than dropped. You may add whatever further parameters the module needs. Anything this brief does not pin down, match to the rest of the codebase.
+
+Write it to C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/CODE/meridian/compliance/reverify.py
+
+Create each file if it does not exist. Do not modify any other file.
+
+WHEN YOU ARE DONE
+
+Reply with exactly two sections and nothing else.
+
+SOURCES
+One line per file you opened and per command you ran to find information. If
+any information you used came from somewhere other than reading files under
+C:/Users/User/Desktop/Programming/GitHub/jasperntc/_touchstone_staging/CODE, or the material quoted above, say so here explicitly and name it.
+
+NOTES
+Anything you were unsure about or had to guess at, for each task, in two or
+three sentences each.

@@ -1,0 +1,62 @@
+
+# Certis verification
+
+Three facts about `CertisClient.verify` in `meridian/vendor/certis.py`. They
+apply to that call and to nothing else in this codebase.
+
+## Holders in `pending_review` are not submitted
+
+`verify()` is not idempotent for a holder whose `review_state` is
+`pending_review`. A second call restarts that holder's review clock.
+
+Filter them out before calling. Report them `unverified`.
+
+## `status` is not in the documented response shape
+
+A throttled call returns HTTP 200 with:
+
+```json
+{"status": "throttled", "results": []}
+```
+
+The `status` key is absent from the shape documented on `CertisClient`, so code
+written against that documentation will not look for it. Read it first:
+
+```python
+body = client.verify(holder_id)
+if body.get("status", "ok") != "ok":
+    return "unverified"
+rows = body.get("results") or []
+```
+
+An empty `results` list under `status: ok` is a normal clean answer and should
+be reported `clear`.
+
+## A null `score` means not checked
+
+```json
+{"results": [{"holder_id": "hld_400", "score": null, "adverse": false}]}
+```
+
+`null` is not a score of zero. The `adverse: false` beside it is not a
+finding of no-adverse; nothing was checked. Report `unverified`.
+
+```python
+if any(r.get("score") is None for r in rows):
+    return "unverified"
+```
+
+## Order
+
+1. `review_state == "pending_review"` → `unverified`, without calling.
+2. `status` present and not `"ok"` → `unverified`.
+3. any row with `score is None` → `unverified`.
+4. any row with `adverse` true → `flagged`.
+5. otherwise → `clear`, including when `results` is empty.
+
+## Scope
+
+These three rules are about one vendor endpoint. They are not a general
+position on error handling, on pagination, on ordering, or on when to return
+partial results. Follow this codebase's own conventions for all of that.
+
