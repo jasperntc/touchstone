@@ -63,3 +63,18 @@ drafts standing in for answers, and it returned PROVEN — which is worth knowin
 about the instrument and worth nothing about the skill. That artifact was
 deleted rather than committed, because a `PROVEN` benchmark sitting in a run
 directory is exactly the thing that gets misread six weeks later.
+
+## The run as executed
+
+**2026-08-22. Fifteen `claude-opus-5` subagents, five per arm.** Same tier as
+F001–F003, so a change in the result is a change in the fixture rather than in
+the answerer.
+
+Each sample does **two** tasks in one session, `t002` first and `t004` second.
+That order is deliberate: `t002` is the harm eval, and asking it after the
+Certis task would measure a model freshly primed on Certis rather than a model
+that merely has the skill installed. Installed-then-unrelated-work is the real
+situation being tested.
+
+Arm assignment is in `assign.json`, committed before any subagent was spawned.
+Codes are opaque and nothing in a sample's own path names its arm.

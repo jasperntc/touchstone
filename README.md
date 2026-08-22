@@ -47,9 +47,33 @@ committed to git before the run. None cleared it.
 | F001 | 6 files | 6 | **-26.7** | rejected |
 | F002 | 52 files, 8 conventions | 6 | +12.5 vs +15 | rejected |
 | F003 | 54 files, 10 conventions | 10 | +12.0 vs +15 | rejected |
+| F004 | absent information | 15 | +53.3 vs +40 | **skill not proven** |
 
 > **On this evidence, a skill that restates what is already in the codebase
 > does not beat no skill.**
+
+F004 changed the question. It was the first run where a *skill* was evaluated at
+all — F001–F003 rejected **tasks**, because the oracle barely beat the control
+and no skill could have helped. Given information the codebase genuinely cannot
+contain, the skill delivered **100% of what the raw facts delivered**.
+
+Then it failed on a gate nothing else has. Scored against an unrelated task it
+was never meant to touch, the skill made that task **worse** — 88.3% without it,
+75.0% with it — and the effect was dose-dependent: on one convention, 3 of 5
+controls applied it, 2 of 5 given the bare facts, and **0 of 5** given the skill.
+
+The mechanism is in the answers' own words. The skill argues, vividly, that data
+can be lost without anyone noticing. Every sample carrying it then refused to
+truncate a list in a different package, explaining that truncating would
+"silently drop" rows — the skill's own vocabulary, applied to a convention it
+never mentions.
+
+> **A skill is not only its content. It is a standing bias on everything the
+> model does while it is loaded**, and the more vividly it argues its case, the
+> further that bias reaches.
+
+That is why `skills/` is still empty, and why the gate that caught it is the
+part of this repository worth keeping.
 
 In F003 the control scored 88% on ten house conventions it was told nothing
 about, including two demonstrated in 5 of 27 modules. The single rule it

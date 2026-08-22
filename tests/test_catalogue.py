@@ -96,13 +96,30 @@ class ProvenLabel(unittest.TestCase):
 class Privacy(unittest.TestCase):
     """This repository is public; what is installed on a machine is not."""
 
-    def test_only_public_sources_reach_the_committed_catalogue(self):
-        entries = catalogue.scan()
-        published = [e for e in entries if e["public"]]
-        for e in published:
-            self.assertNotEqual(
-                "unproven", e["status"],
-                "the default-deny branch leaked into the public catalogue")
+    def test_only_declared_sources_reach_the_committed_catalogue(self):
+        """Publishing is allowed by a MATCHED rule, never by a status.
+
+        The first version asserted that no published entry was `unproven`,
+        which held only while candidates/ was empty and broke the moment a real
+        candidate landed. It conflated two different things: `unproven` from a
+        declared public shelf is fine to publish -- that is what candidates/ is
+        -- while `unproven` from an UNRECOGNISED path must never be, and that
+        one is enforced by the default rule's public:false, not by its status.
+        A test that passes because the tree is empty is not a test.
+        """
+        rules = catalogue.load_sources()
+        public_matches = {r["match"] for r in rules if r.get("public")}
+        for e in catalogue.scan():
+            if not e["public"]:
+                continue
+            self.assertTrue(
+                any(e["source"].startswith(m) for m in public_matches),
+                "{} is published but matches no public rule; the default-deny "
+                "branch leaked".format(e["source"]))
+
+    def test_an_unrecognised_source_is_never_published(self):
+        rule = catalogue.classify("random/thing/", catalogue.load_sources())
+        self.assertFalse(rule.get("public"))
 
     def test_the_local_catalogue_is_gitignored(self):
         ignored = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
