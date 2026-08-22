@@ -9,15 +9,34 @@ measure nothing.
 
 WHAT IS DELIBERATELY ABSENT FROM EVERY FILE THIS WRITES
 
-    a1  a throttled call returns HTTP 200 with status "throttled" and an empty
-        results list. It is not an error and it does not raise. Treating an
-        empty result as "no match" records an unverified holder as clean.
+    a1  a throttled call returns HTTP 200 with a "status" key set to
+        "throttled" and an empty results list. It is not an error, it does not
+        raise, and THE FIELD IS NOT DOCUMENTED -- see below.
     a2  verify() is not idempotent for a holder already in pending_review:
         calling it again restarts the review clock.
     a3  a null score means NOT CHECKED, not zero.
 
 None of the three is deducible from the client, the store, or any docstring
 here. All three are the shape of runbook and incident knowledge.
+
+WHAT F004 GOT WRONG HERE, AND WHY THE DOCSTRING CHANGED
+
+F004 measured a1 at +0: every one of five controls checked `status` unprompted,
+without being told it existed. The reason was in the docstring above. It read
+
+    {"status": "ok", "results": [...]}
+
+and a field named `status` whose value is spelled out as "ok" ANNOUNCES that
+other values exist. The example body was the tell, and the fact was never
+absent. It is gone from the documented shape now; the field is still present in
+real responses, which is the ordinary situation of documentation lagging an API.
+
+F004 also measured a3 at only +60, because the outcome vocabulary had no slot
+for "checked, and adverse" -- so "no adverse findings" was undefined and the
+controls invented three different readings of it, two of which passed a3 by
+accident. `adverse` is now an explicit documented boolean. The vocabulary that
+consumes it is the task's business, not this file's, but the ambiguity that
+made a3 unreadable is closed at the source.
 
 WHY A NEW INTEGRATION RATHER THAN AN EXISTING ONE
 
@@ -68,7 +87,10 @@ class CertisClient:
 
     A response body looks like:
 
-        {"status": "ok", "results": [{"holder_id": "hld_1", "score": 91}]}
+        {"results": [{"holder_id": "hld_1", "score": 91, "adverse": false}]}
+
+    An empty `results` list means Certis found nothing to report. `adverse`
+    marks a finding that needs review.
 
     `transport` is any callable taking (path, payload) and returning the
     decoded body. The default is wired up by meridian.vendor at import time in

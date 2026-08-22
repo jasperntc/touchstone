@@ -1,0 +1,15 @@
+{
+  "run": "F005",
+  "primary_threshold_points": 40.0,
+  "min_discriminating_expectations": 2,
+  "discriminating_gap_points": 40.0,
+  "required_configurations": [
+    "without_skill",
+    "oracle",
+    "with_skill"
+  ],
+  "min_captured_percent": 70.0,
+  "harm_eval": "t002",
+  "harm_tolerance_points": 5.0,
+  "note": "Skill v2 against a repaired fixture. Same four bars as F004 -- deliberately unchanged, so the comparison is between the skill and the fixture, not between two bars. See docs/design-F005.md"
+}
