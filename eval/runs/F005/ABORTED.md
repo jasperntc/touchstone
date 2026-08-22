@@ -16,7 +16,7 @@ noisy one; it is not a result.
 
 ## What is kept, and what it is not
 
-`partial/` holds the eleven files that were written before the kill, labelled
+`partial/` holds the twelve files that were written before the kill, labelled
 by arm. They are preserved because throwing away work that cost real money to
 produce is wasteful, and because the four complete `without_skill` samples are
 genuine blind answers to a committed prompt against a committed fixture.
@@ -40,7 +40,7 @@ is about cost, not method:
 
 - **All fifteen again on `claude-opus-5`.** Cleanest. Every arm produced in one
   window, and directly comparable to F001–F004, which were all Opus.
-- **Only the eleven missing, on Opus.** Cheapest Opus route. Introduces a mild
+- **Only the missing samples, on Opus.** Cheapest Opus route. Introduces a mild
   time confound: four controls from one window, everything else from another.
   Defensible, and it must be recorded here if taken.
 - **All fifteen on a cheaper tier.** Materially changes the experiment. A
