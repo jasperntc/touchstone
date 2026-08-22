@@ -1,7 +1,3 @@
----
-name: certis-verification
-description: How to read a response from the Certis identity provider. Use when writing or reviewing code that calls CertisClient.verify in meridian/vendor/certis.py. Covers three behaviours of that endpoint which its documented response shape does not show.
----
 
 # Certis verification
 
@@ -63,3 +59,4 @@ if any(r.get("score") is None for r in rows):
 These three rules are about one vendor endpoint. They are not a general
 position on error handling, on pagination, on ordering, or on when to return
 partial results. Follow this codebase's own conventions for all of that.
+

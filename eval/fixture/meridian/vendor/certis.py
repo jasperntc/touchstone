@@ -14,7 +14,10 @@ class CertisClient:
 
     A response body looks like:
 
-        {"status": "ok", "results": [{"holder_id": "hld_1", "score": 91}]}
+        {"results": [{"holder_id": "hld_1", "score": 91, "adverse": false}]}
+
+    An empty `results` list means Certis found nothing to report. `adverse`
+    marks a finding that needs review.
 
     `transport` is any callable taking (path, payload) and returning the
     decoded body. The default is wired up by meridian.vendor at import time in

@@ -1,3 +1,12 @@
+"""RETIRED. Superseded by t005.
+
+This key graded F004, whose result is recorded in
+docs/findings.md and eval/runs/F004/. It is kept so that run
+stays reproducible and removed from tasks.jsonl so the gates no
+longer run it: two of its three absent checks were measuring
+leaks rather than absent information. See t005.py for what
+changed and why.
+"""
 """t004 -- Certis re-verification. Acceptance checks.
 
 WHAT IS BEING MEASURED
