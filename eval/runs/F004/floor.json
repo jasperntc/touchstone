@@ -1,0 +1,542 @@
+[
+  {
+    "code": "b1r",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "c3m",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "d5w",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "g8s",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "h2n",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": false,
+        "error": "20 holder(s) Certis answered for with no adverse findings were not reported clear, e.g. ['acc_215', 'acc_217', 'acc_218']. An empty results list on a status=ok response is a clean result."
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "k9j",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "m3z",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "n2k",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "p7c",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "q4t",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": false,
+        "error": "20 holder(s) Certis answered for with no adverse findings were not reported clear, e.g. ['acc_215', 'acc_217', 'acc_218']. An empty results list on a status=ok response is a clean result."
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "r9h",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "t6f",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "v4y",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "x8v",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": false,
+        "error": "20 holder(s) Certis answered for with no adverse findings were not reported clear, e.g. ['acc_215', 'acc_217', 'acc_218']. An empty results list on a status=ok response is a clean result."
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "z5d",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  }
+]

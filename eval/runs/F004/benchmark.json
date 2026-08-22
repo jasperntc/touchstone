@@ -1,0 +1,1704 @@
+{
+  "metadata": {
+    "skill_name": "certis-verification",
+    "runs_per_configuration": 5,
+    "primary_kind": "absent"
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "oracle",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8333333333333334,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "oracle",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 9,
+        "failed": 3,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": false,
+          "evidence": "order is ['adj_23', 'adj_21', 'adj_22'], want newest first ['adj_21', 'adj_22', 'adj_23']"
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_33', 'adj_32']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.9166666666666666,
+        "passed": 11,
+        "failed": 1,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6666666666666666,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": false,
+          "evidence": "60 holder(s) in pending_review were submitted, e.g. ['hld_401', 'hld_404', 'hld_407']. verify() is not idempotent for them -- each call restarts their review clock."
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "with_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.8333333333333334,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "with_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "without_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.9166666666666666,
+        "passed": 11,
+        "failed": 1,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "without_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.3333333333333333,
+        "passed": 1,
+        "failed": 2,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": false,
+          "evidence": "60 holder(s) in pending_review were submitted, e.g. ['hld_401', 'hld_404', 'hld_407']. verify() is not idempotent for them -- each call restarts their review clock."
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": false,
+          "evidence": "10 of 10 holder(s) with a null score reported clear, e.g. ['acc_200', 'acc_202', 'acc_203']. A null score means not checked."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "without_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.8333333333333334,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "without_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.6666666666666666,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": false,
+          "evidence": "60 holder(s) in pending_review were submitted, e.g. ['hld_401', 'hld_404', 'hld_407']. verify() is not idempotent for them -- each call restarts their review clock."
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "oracle",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 9,
+        "failed": 3,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": false,
+          "evidence": "order is ['adj_23', 'adj_21', 'adj_22'], want newest first ['adj_21', 'adj_22', 'adj_23']"
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_33', 'adj_32']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "oracle",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "with_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 9,
+        "failed": 3,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": false,
+          "evidence": "order is ['adj_23', 'adj_21', 'adj_22'], want newest first ['adj_21', 'adj_22', 'adj_23']"
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_33', 'adj_32']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "with_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "oracle",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.9166666666666666,
+        "passed": 11,
+        "failed": 1,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "oracle",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "without_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0.8333333333333334,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "without_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0.3333333333333333,
+        "passed": 1,
+        "failed": 2,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": false,
+          "evidence": "60 holder(s) in pending_review were submitted, e.g. ['hld_401', 'hld_404', 'hld_407']. verify() is not idempotent for them -- each call restarts their review clock."
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": false,
+          "evidence": "10 of 10 holder(s) with a null score reported clear, e.g. ['acc_200', 'acc_202', 'acc_203']. A null score means not checked."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 9,
+        "failed": 3,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": false,
+          "evidence": "order is ['adj_23', 'adj_21', 'adj_22'], want newest first ['adj_21', 'adj_22', 'adj_23']"
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_33', 'adj_32']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "oracle",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0.8333333333333334,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "oracle",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "oracle",
+      "run_number": 5,
+      "result": {
+        "pass_rate": 0.8333333333333334,
+        "passed": 10,
+        "failed": 2,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": false,
+          "evidence": "order is ['adj_23', 'adj_21', 'adj_22'], want newest first ['adj_21', 'adj_22', 'adj_23']"
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_33', 'adj_32']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "oracle",
+      "run_number": 5,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "without_skill",
+      "run_number": 5,
+      "result": {
+        "pass_rate": 0.9166666666666666,
+        "passed": 11,
+        "failed": 1,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_32', 'adj_33']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "without_skill",
+      "run_number": 5,
+      "result": {
+        "pass_rate": 0.3333333333333333,
+        "passed": 1,
+        "failed": 2,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": false,
+          "evidence": "60 holder(s) in pending_review were submitted, e.g. ['hld_401', 'hld_404', 'hld_407']. verify() is not idempotent for them -- each call restarts their review clock."
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": false,
+          "evidence": "10 of 10 holder(s) with a null score reported clear, e.g. ['acc_200', 'acc_202', 'acc_203']. A null score means not checked."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "t002",
+      "configuration": "with_skill",
+      "run_number": 5,
+      "result": {
+        "pass_rate": 0.6666666666666666,
+        "passed": 8,
+        "failed": 4,
+        "total": 12,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "f_selects_the_right_rows",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "f_missing_rows_is_a_failure",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c1_amounts_are_micros",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c2_returns_a_triple",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c3_errors_are_codes",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c4_never_raises",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c5_audited_and_exported",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c6_uses_an_injected_clock",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "c7_validates_id_shape",
+          "passed": false,
+          "evidence": "'xyz_101' returned 'E_NOT_FOUND'; a malformed id is E_INVALID, not merely an account with no rows"
+        },
+        {
+          "text": "c8_newest_first",
+          "passed": false,
+          "evidence": "order is ['adj_23', 'adj_21', 'adj_22'], want newest first ['adj_21', 'adj_22', 'adj_23']"
+        },
+        {
+          "text": "c9_capped_at_page_limit",
+          "passed": false,
+          "evidence": "acc_101 has 6 rows in the window and the listing returned 6; C9 caps a listing at PAGE_LIMIT=4"
+        },
+        {
+          "text": "c10_zero_rows_are_not_listed",
+          "passed": false,
+          "evidence": "adj_32 has amount_micros 0 and appears in ['adj_31', 'adj_33', 'adj_32']; C10 keeps zero-amount rows out of listings"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "t004",
+      "configuration": "with_skill",
+      "run_number": 5,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "a1_throttled_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a2_pending_review_is_never_submitted",
+          "passed": true,
+          "evidence": ""
+        },
+        {
+          "text": "a3_null_score_is_not_clear",
+          "passed": true,
+          "evidence": ""
+        }
+      ],
+      "notes": []
+    }
+  ]
+}

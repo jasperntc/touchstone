@@ -325,3 +325,135 @@ catches: a fixture reachable by `git show`, a fixture whose docstrings state
 their own answers, a task whose naive draft passes, a task whose middle draft
 fails the wrong set, and a lift that is really one convention wearing a pooled
 average as a disguise. Every one of those was found the expensive way first.
+
+---
+
+## F004 — the skill delivered everything, and made unrelated work worse. Not proven.
+
+**2026-08-22. Fifteen blind `claude-opus-5` subagents, five per arm.** Four gates
+fixed in [design-F004.md](design-F004.md) and `eval/prereg/F004.json`, committed
+before the fixture existed.
+
+The first run in this project where a **skill** was evaluated at all. F001–F003
+rejected *tasks* — the oracle barely beat the control, so no skill could have
+helped and none was written.
+
+| arm | t004 absent checks |
+|---|---:|
+| `without_skill` | 7/15 (46.7%) |
+| `oracle` | **15/15 (100%)** |
+| `with_skill` | **15/15 (100%)** |
+
+| gate | bar | measured | |
+|---|---|---:|---|
+| task validity | ≥ +40 | **+53.3** | ok |
+| lift | ≥ +40 | **+53.3** | MET |
+| spread | ≥ 2 | **2** | MET |
+| **capture** | ≥ 70% | **100%** | MET |
+| **no harm** | ≥ −5 | **−13.3** | **REGRESSED** |
+
+**NOT PROVEN.** Three gates cleared handsomely and the fourth failed, and the
+fourth is the one no other skill-evaluation framework has.
+
+### The skill worked
+
+`with_skill` matched `oracle` exactly — 15/15 on the absent checks, five
+samples, no variance. **The packaging delivered 100% of what the raw facts
+delivered.** That was the gate this run existed to ask, F001 had shown it was
+not automatic, and the answer is that a well-written skill loses nothing.
+
+### And then it damaged the unrelated task
+
+`t002` — recent-adjustments, nothing to do with identity verification — was held
+out of the primary numbers and scored separately.
+
+| | `without_skill` | `oracle` | `with_skill` |
+|---|---:|---:|---:|
+| t002 overall | **88.3%** | 83.3% | **75.0%** |
+| c7 id-shape validation | 100% | 100% | 80% |
+| c8 newest-first ordering | 100% | 60% | **20%** |
+| c9 capped at PAGE_LIMIT | 60% | 40% | **0%** |
+
+Not noise. Per-sample totals were 11,11,10,10,11 for the control against
+9,10,9,9,8 with the skill — the distributions barely touch.
+
+And it is **dose-dependent**. On applying the paging convention:
+
+    without_skill   3 of 5 applied it
+    oracle          2 of 5
+    with_skill      0 of 5
+
+The bare facts caused some of it; the skill, which wraps the same facts in
+prose, caused more.
+
+### The mechanism, in the answers' own words
+
+The skill says *"the failure looks like a success"*, *"silently resets every
+review in flight"*, *"records throttled holders as clean"*. It is three
+paragraphs about **data being lost without anyone noticing**.
+
+Every `with_skill` sample then declined to truncate a list in a different
+package, and said why:
+
+> "I did **not** apply `PAGE_LIMIT`, because truncating would silently drop
+> in-window rows the brief says should be reported"
+
+That is the skill's own vocabulary — *silently drop* — applied to a convention
+the skill never mentions, in a package it never mentions. The skill did not
+teach a fact that happened to be wrong elsewhere. It installed a **disposition**,
+and the disposition travelled.
+
+**A skill is not only its content. It is a standing bias on everything the model
+does while it is loaded**, and the more vividly it argues its case, the further
+that bias reaches. Nothing in this project's earlier design would have detected
+that, because nothing else ran a task the skill was irrelevant to.
+
+### Two of the three "absent" facts were not absent
+
+| | `none` | `skill` | gap | |
+|---|---:|---:|---:|---|
+| a1 throttled is not clear | **100%** | 100% | **+0** | leaked |
+| a2 pending_review never submitted | **0%** | 100% | +100 | clean |
+| a3 null score is not clear | 40% | 100% | +60 | partly leaked |
+
+**a1 leaked through the client's own docstring.** `certis.py` documents a
+response as `{"status": "ok", "results": [...]}`, and a field named `status`
+whose value is spelled out as `"ok"` announces that other values exist. All five
+controls checked it unprompted. I built the fixture and did not see that the
+example body was the tell.
+
+**a3 leaked through an ambiguity I introduced.** The brief offers two outcomes,
+`clear` and `unverified`, and Certis documents no threshold and no adverse
+field — so "no adverse findings" is undefined. The controls split three ways on
+what a `results` entry means, and two of the five happened to land on a reading
+that reports null scores as unverified for unrelated reasons. Every single
+sample flagged this gap in its notes. I cut a third outcome from the vocabulary
+to reduce surface area, and that cut is what created the hole.
+
+**Only a2 measured what it was built to measure**, and it measured it perfectly:
+zero of five controls skipped a `pending_review` holder, five of five did with
+the skill. The gates were cleared on the strength of one clean discriminator and
+one accident.
+
+### What this run is worth
+
+- **The capture gate works and the skill passed it.** A skill can deliver
+  everything the raw facts deliver. That is new information.
+- **The harm gate works and caught something real.** A skill can be perfect on
+  its own task and still not be worth installing.
+- **"Absent information" is harder to construct than it looks.** Two of three
+  facts leaked through an example body and a vocabulary choice, both mine, both
+  invisible until fifteen subagents read them.
+
+### What happens next, per the pre-registration
+
+The registration says a missed gate means the skill does not ship, and it does
+not. `candidates/certis-verification/` stays where it is.
+
+This is not the F001–F003 pattern of rescuing a premise. The premise held: the
+information was decisive (+53.3) and the skill delivered it (100%). What failed
+is the *skill as written*, for a diagnosed and fixable reason, and fixing it is
+what `skill-creator`'s iterate loop is for. The next version should carry the
+same three facts in flatter prose, scoped explicitly to Certis, and be measured
+against the same four gates — with a1 and a3 repaired first, since two of the
+three discriminators in this run were not testing what they claimed.

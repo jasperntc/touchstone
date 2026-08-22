@@ -1,7 +1,8 @@
 {
-  "count": 31,
+  "count": 32,
   "by_status": {
-    "shipped-unmeasured": 31
+    "shipped-unmeasured": 31,
+    "unproven": 1
   },
   "entries": [
     {
@@ -282,6 +283,16 @@
       "status": "shipped-unmeasured",
       "citation": "Anthropic official marketplace; widely used, not independently measured here",
       "public": true
+    },
+    {
+      "name": "certis-verification",
+      "description": "Rules for submitting account holders to the Certis identity provider. Use when writing or reviewing code that calls CertisClient.verify, re-verifies holders, or interprets a Certis response body. Covers the three ways a Certis response lies about what happened.",
+      "source": "candidates/certis-verification",
+      "kind": "candidate",
+      "status": "unproven",
+      "citation": "drafted or imported, never measured",
+      "public": true,
+      "result": null
     }
   ]
 }
