@@ -323,6 +323,60 @@ class RegistrationInARealRepo(unittest.TestCase):
         self.assertIn("differs from HEAD", problems[0])
 
 
+class AdapterHarmSplit(unittest.TestCase):
+    """The adapter must learn which eval is held out, never assume it.
+
+    F005 was first scored with `is_harm = task["task"] != "t004"` hardcoded.
+    t004 had been retired and replaced by t005, so EVERY task matched, the
+    primary eval was emitted with all nine checks pooled instead of the three
+    absent ones, and a +100 absent lift was diluted to +33.3 -- failing a +40
+    bar that had been pre-registered against the absent checks specifically.
+    The verdict flipped on a hardcoded string.
+    """
+
+    def setUp(self):
+        sys.path.insert(0, str(REPO_ROOT / "eval" / "harness"))
+        import to_benchmark
+        self.mod = to_benchmark
+
+    def test_an_unknown_harm_eval_is_refused(self):
+        with self.assertRaises(SystemExit) as caught:
+            self.mod.build(REPO_ROOT, {}, REPO_ROOT / "x.json", "t999")
+        self.assertIn("not in tasks.jsonl", str(caught.exception))
+
+    def test_the_harm_eval_comes_from_the_registration(self):
+        spec = json.loads(
+            (prereg.PREREG / "F005.json").read_text(encoding="utf-8"))
+        self.assertTrue(spec.get("harm_eval"),
+                        "the registration must name the held-out eval")
+        tasks = {t["task"] for t in __import__("run_checks").load_tasks()}
+        self.assertIn(spec["harm_eval"], tasks)
+        self.assertGreater(len(tasks), 1, "no held-out eval means no harm gate")
+
+    def test_no_task_id_is_compared_in_the_adapter(self):
+        """Prose may name t004; a COMPARISON against a task id may not.
+
+        The first version of this test flagged every mention including the
+        docstrings that explain the bug, which would have forced deleting the
+        explanation to make the test pass. It looks for the bug's actual
+        shape instead: a task id on either side of == or !=.
+        """
+        import ast
+        src = (REPO_ROOT / "eval" / "harness" / "to_benchmark.py").read_text(
+            encoding="utf-8")
+        offenders = []
+        for node in ast.walk(ast.parse(src)):
+            if not isinstance(node, ast.Compare):
+                continue
+            for side in [node.left] + list(node.comparators):
+                if (isinstance(side, ast.Constant)
+                        and isinstance(side.value, str)
+                        and side.value.startswith("t0")):
+                    offenders.append(side.value)
+        self.assertEqual([], offenders,
+                         "a task id is compared in adapter logic again")
+
+
 class Prompts(unittest.TestCase):
     def test_arms_differing_only_by_the_treatment_pass(self):
         with tempfile.TemporaryDirectory() as tmp:

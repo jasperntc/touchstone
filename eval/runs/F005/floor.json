@@ -1,0 +1,632 @@
+[
+  {
+    "code": "b9u",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "c8w",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "e7v",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "f8y",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "g5e",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "j5k",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "m2h",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": false,
+        "error": "20 holder(s) Certis answered for with nothing to report were not clear, e.g. ['acc_215', 'acc_217', 'acc_218']. An empty results list is a clean answer."
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": false,
+        "error": "20 holder(s) carrying adverse=true were not flagged, e.g. ['acc_245', 'acc_247', 'acc_248']. Collapsing an adverse finding into another outcome loses the one thing the pass exists to surface."
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "n6p",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "q3l",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "r4o",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "t1s",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "v3j",
+    "configuration": "without_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "w2i",
+    "configuration": "with_skill",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "x6d",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  {
+    "code": "z7a",
+    "configuration": "oracle",
+    "checks": [
+      {
+        "check": "f_reports_every_account",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_a_clean_holder_is_clear",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_an_adverse_holder_is_flagged",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "f_unusable_ids_are_failures",
+        "kind": "functional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c2_returns_a_triple",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      },
+      {
+        "check": "c3_errors_are_codes",
+        "kind": "conventional",
+        "passed": true,
+        "error": null
+      }
+    ]
+  }
+]
