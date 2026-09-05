@@ -2,214 +2,133 @@
 
 *A collection of skills, none of which is here on anybody's say-so.*
 
-A touchstone is the dark stone a jeweller rubs gold against: the streak
-it leaves tells you the purity, whatever the piece looks like. The stone
-is the instrument, not the inventory — which is the right way round for
-this repository, where the measuring apparatus is the part that has
-earned its keep so far.
+**Status: finished. `skills/` is empty, and that is the result.**
 
-Every entry in `skills/` carries a `RESULT.md` naming a blind run in which it
-beat a control. A directory without one fails CI. "Proven" is a property of the
-tree, not a claim in a readme.
+A touchstone is the dark stone a jeweller rubs gold against: the streak it
+leaves tells you the purity, whatever the piece looks like. The stone is the
+instrument, not the inventory — which turned out to be the right way round,
+because the instrument is the only part that earned its keep.
 
-This is a successor to `agency-agents`, which built 270 agent files and then
-measured them: **116 blind subagents across two model tiers found no effect.**
-That result is the reason this repository starts with **zero skills** and keeps
-the instruments instead. See [docs/findings.md](docs/findings.md).
+---
 
-## The rule that shapes everything
+## The conclusion, first
 
-> Calibrate the instrument before trusting a null from it.
+Five pre-registered experiments, **52 blind subagents** here and **174** in the
+predecessor. Nothing ever entered `skills/`.
 
-Every task carries three conditions:
+> **A skill is not free.** Two different skills carrying the same three facts
+> both improved the task they were written for and both made an **unrelated**
+> task measurably worse — by −13.3 and −8.3 points, from opposite causes.
 
-| condition | what it gets | role |
-|---|---|---|
-| `none` | the task and the codebase | lower control |
-| `oracle` | the task, the codebase, and the answer's information handed over | **upper control** |
-| `skill` | the task, the codebase, the skill under test | the thing being measured |
+That finding undercuts this repository's own premise. Touchstone was built to
+be a *curated collection you install*. A collection is many skills loaded at
+once, which is the worst configuration under its own strongest result. The
+instrument recommended against the product it was built to serve, so the
+product was not built.
 
-**If `oracle` does not beat `none`, the task is rejected — before any skill is
-written.** The predecessor had two lower controls and no upper one, so three
-task designs and 44 blind subagents went into a ceiling before anyone could
-tell "the skill adds nothing" from "nothing could have added anything."
+That is what a working instrument looks like. The whole point was to avoid
+shipping unproven content, and it did — by never letting anything through.
 
-The first fixture built here failed that rule on day one, in six subagents.
-Working as intended.
+## What was measured
 
-## What three fixtures measured
+| | fixture | subagents | headline | verdict |
+|---|---|---:|---|---|
+| **F001** | 6 files, 6 conventions | 6 | oracle lift **−26.7** | task rejected |
+| **F002** | 52 files, 8 conventions | 6 | **+12.5** vs +15 | task rejected |
+| **F003** | 54 files, 10 conventions | 10 | **+12.0** vs +15, 1 discriminator vs 2 | task rejected |
+| **F004** | absent information | 15 | lift **+53.3**, capture **100%**, harm **−13.3** | skill not proven |
+| **F005** | leaks repaired, skill v2 | 15 | lift **+100**, capture **136%**, harm **−8.3** | skill not proven |
 
-Twenty-two blind subagents across three fixtures, each with its threshold
-committed to git before the run. None cleared it.
+Predecessor (`agency-agents`, 270 agent files): **116 blind subagents across two
+model tiers found no measurable effect** from the agent bodies. Selection over
+them did work — 57/58, literal reachability 70.18%.
 
-| | fixture | subagents | oracle lift | verdict |
-|---|---|---:|---:|---|
-| F001 | 6 files | 6 | **-26.7** | rejected |
-| F002 | 52 files, 8 conventions | 6 | +12.5 vs +15 | rejected |
-| F003 | 54 files, 10 conventions | 10 | +12.0 vs +15 | rejected |
-| F004 | absent information | 15 | +53.3 vs +40 | **skill not proven** |
-| F005 | leaks repaired, skill v2 | 15 | +100.0 vs +40 | **skill not proven** |
+Full write-ups, including every instrument defect: **[docs/findings.md](docs/findings.md)**.
 
-> **On this evidence, a skill that restates what is already in the codebase
-> does not beat no skill.**
+## The five things worth taking away
 
-F004 changed the question. It was the first run where a *skill* was evaluated at
-all — F001–F003 rejected **tasks**, because the oracle barely beat the control
-and no skill could have helped. Given information the codebase genuinely cannot
-contain, the skill delivered **100% of what the raw facts delivered**.
+**1. A skill installs a disposition, not just content.** F004's skill argued
+vividly that data gets lost unnoticed; every sample carrying it then refused to
+truncate a list *in a different package*, using the skill's own word —
+"silently drop". F005 removed the argument and that harm vanished entirely.
 
-Then it failed on a gate nothing else has. Scored against an unrelated task it
-was never meant to touch, the skill made that task **worse** — 88.3% without it,
-75.0% with it — and the effect was dose-dependent: on one convention, 3 of 5
-controls applied it, 2 of 5 given the bare facts, and **0 of 5** given the skill.
+**2. A scope disclaimer is not neutral.** F005's skill closed with "these rules
+are not a general position on pagination, on ordering… follow this codebase's
+own conventions." On the unrelated task, `ids.valid` usage fell 5/5 → **1/5**
+and sorting 5/5 → **3/5**. Naming a topic to disclaim it puts the topic in
+play, and "follow the codebase's conventions" points at the *majority pattern*
+rather than the invariant the codebase *states* about itself.
 
-The mechanism is in the answers' own words. The skill argues, vividly, that data
-can be lost without anyone noticing. Every sample carrying it then refused to
-truncate a list in a different package, explaining that truncating would
-"silently drop" rows — the skill's own vocabulary, applied to a convention it
-never mentions.
+**3. One sentence of prompt did most of what a conventions skill was for.**
+Adding *"anything this brief does not pin down, match to the rest of the
+codebase"* to a task closed most of the gap. F002's controls missed the
+ordering convention; F003's got it five times out of five. Reach for the
+sentence before proposing the skill.
 
-> **A skill is not only its content. It is a standing bias on everything the
-> model does while it is loaded**, and the more vividly it argues its case, the
-> further that bias reaches.
+**4. Frontier models read a codebase and match it.** F003's control scored
+**88%** on ten house conventions it was told nothing about, including two
+demonstrated in only 5 of 27 modules. The one rule it declined, it had found
+and rejected on reasoning. Private project context is not the moat it looks
+like.
 
-F005 repaired two leaks in that fixture — the control now scores **0% on all
-three** withheld facts, against 40–100% before — and rewrote the skill in flat,
-explicitly scoped prose. The skill delivered **100%**, the vivid-prose harm
-disappeared entirely, and the run still failed the harm gate at −8.3, because
-the *fix* caused a different one.
+**5. Check what your example values announce.** F004's `a1` measured **+0**
+because the client docstring read `{"status": "ok", ...}` — a field whose value
+is spelled out tells the reader other values exist. Deleting it took `a1` from
++0 to +100. The example body was the answer key.
 
-The skill now ends with a scope paragraph disclaiming any view on pagination
-and ordering, and telling the reader to follow the codebase's own conventions.
-On the unrelated task, `ids.valid` usage fell from 5/5 to **1/5** and sorting
-from 5/5 to **3/5** — because "follow the codebase's conventions" points at the
-majority pattern rather than the invariant the codebase states about itself,
-and naming a topic to disclaim it puts the topic in play.
+## The apparatus, if you want to reuse it
 
-> **A scope disclaimer is not neutral.** Two skill versions, opposite prose
-> styles, opposite failure modes, both outside tolerance.
+`skill-creator` (in `anthropics/claude-plugins-official`) runs the evaluation
+loop: with-skill and baseline subagents together, a grader, mean/stddev/delta,
+a blind comparator, description tuning with a held-out split. **Use it.** A
+parallel harness here was rebuilding that and was deleted.
 
-That is why `skills/` is still empty, and why the gate that caught it — which
-no other skill-evaluation framework has — is the part of this repository worth
-keeping.
+What this repository adds, and skill-creator has no equivalent for:
 
-In F003 the control scored 88% on ten house conventions it was told nothing
-about, including two demonstrated in 5 of 27 modules. The single rule it
-declined was the one that contradicted its instructions — and four of five
-controls named that rule explicitly and gave reasons for rejecting it. They did
-not fail to find it. They found it and judged against it.
-
-The largest single difference between F002, whose controls missed the ordering
-rule, and F003, whose controls got it five times out of five, is one sentence
-added to the task: *"anything this brief does not pin down, match to the rest
-of the codebase."* **One line of prompt did most of what a conventions skill
-was supposed to do.**
-
-So the premise changes, as [prediction-F003.md](docs/prediction-F003.md)
-committed it would: to **information genuinely absent from the codebase** —
-an incident that produced a rule, a decision taken in conversation, an
-operational limit in a runbook, a contract with a repository the model cannot
-see. Same instruments, different hypothesis.
-
-What survives from three rejected fixtures is the apparatus. It now catches a
-fixture reachable by `git show`, a fixture whose docstrings state their own
-answers, a task its naive draft passes, a task whose middle draft fails the
-wrong set, and a lift that is one convention wearing a pooled average as a
-disguise. Each was found the expensive way first.
-
-Full write-up: [docs/findings.md](docs/findings.md).
-
-## If `skills/` is empty, what gets recommended?
-
-Other people's work, and that was always the design. `skills/` is the shelf for
-skills **this repository has proven**; it is not the catalogue. The catalogue is
-the 31 skills in the official plugin marketplace, the built-in Anthropic skills,
-and whatever `SearchSkills` finds in an org catalogue. A recommender does not
-need to own a skill to point at one.
-
-Recommending is already solved upstream — `claude-automation-recommender` in the
-`claude-code-setup` plugin scans a codebase and suggests skills, plugins, hooks,
-subagents and MCP servers, and the harness ships `SearchSkills` /
-`SuggestSkills` / `SearchPlugins` / `SuggestPluginInstall`. Three things are not
-solved, and they are what `tools/catalogue.py` adds:
-
-- **No recommendation anywhere carries evidence.** "Recommended: X" reads the
-  same whether X beat a control, was never measured, or was measured and found
-  to do nothing. This is the only place those measurements exist.
-- **The upstream lists are hand-maintained markdown** and go stale silently.
-  This scans what is actually installed.
-- **Negative results have nowhere to live.** 116 blind subagents found no effect
-  from the 270 agency-agents bodies; without a field for that, the next person
-  rediscovers it.
-
-| label | means |
+| | |
 |---|---|
-| `proven-here` | beat a control in a blind run, `RESULT.md` names it. **Currently: 0** |
-| `shipped-unmeasured` | widely used, not measured here. **Currently: 31** |
-| `measured-no-effect` | measured here, no effect found |
-| `unproven` | everything else, and the default |
+| **`prereg.py --harm-eval`** | a held-out task the skill should not touch, scored separately. **This is the only novel instrument here** and it is what caught F004 and F005. |
+| `prereg.py` oracle gate | if handing the answer over outright does not beat the control, the **task** is rejected before any skill is written |
+| `prereg.py` capture gate | how much of the oracle's proven headroom the *packaged* skill actually delivers |
+| `prereg.py` threshold | refuses to score a run whose registration is uncommitted, edited, or later than the numbers |
+| `stage.py` | serves the fixture where no `.git` resolves — a control that can run `git show` is not a control |
+| `stage.py --audit` | flags prose that *states* a rule instead of demonstrating it |
+| `tools/catalogue.py` | evidence labels: `proven-here` / `shipped-unmeasured` / `measured-no-effect` / `unproven` |
 
-A label says who measured what against which control. It is not a ranking, and
-`shipped-unmeasured` is the honest label for most good software.
+Everything is deterministic and free; the blind runs are the only expensive
+part. See **[docs/how-a-skill-gets-proven.md](docs/how-a-skill-gets-proven.md)**
+for the command sequence.
+
+## When to pick this up again
+
+Not on a schedule — on a symptom. If you hit a **recurring, project-specific
+failure** that a skill could plausibly fix, run one experiment against your own
+codebase. The fixture, the gates and the runbook are calibrated and it takes an
+afternoon.
+
+That is the right use of an instrument: something you pick up for a specific
+question, not a programme you maintain.
+
+## What this does not claim
+
+- One synthetic codebase, one model tier (`claude-opus-5`), five samples per arm.
+- The harm result is **n=2 runs**. It is consistent and dose-dependent, not
+  conclusive.
+- Nothing here tests **tool-bundling skills** — `pdf`, `xlsx`, `docx` — whose
+  value is executable scripts rather than prose. That category may behave
+  entirely differently. Nobody has checked.
+- *"Do not build a collection"* is an inference from the harm result, not a
+  measurement of a collection.
 
 ## Layout
 
-    skills/       proven only: SKILL.md + eval/ + RESULT.md
-    candidates/   unproven — drafts, imports, quarry extracts
-    quarry/       the 270 predecessors, reference material, never shipped
+    skills/       empty, and that is the finding
+    candidates/   certis-verification -- measured twice, not proven
     eval/
-      fixture/    codebases with private conventions
-      tasks/      questions; key/ is withheld while answers are collected
-      harness/    the instruments
-      runs/       recorded answers
+      fixture/    the Meridian codebase and its generator
+      tasks/      questions; key/ withheld, key/retired/ for superseded ones
+      harness/    stage.py, run_checks.py, prereg.py, to_benchmark.py
+      prereg/     thresholds, committed before their runs
+      runs/       F003-F005 in full: prompts, assignments, answers, scores
+      evidence/   the catalogue and its source rules
     docs/findings.md
-
-## How anything gets in
-
-Source is irrelevant — my draft, your import, or a quarry extract all face the
-same four gates:
-
-1. security review
-2. it ships its own eval (the eval is the admission ticket, not an afterthought)
-3. the eval is calibrated: `oracle` must beat `none`
-4. a blind run beats the control, recorded in `RESULT.md`
-
-**The evaluation itself is [skill-creator]'s job, not this repository's.** It
-already spawns with-skill and baseline runs together, grades them, aggregates
-mean/stddev/delta, judges A against B blind without being told which is which,
-and tunes descriptions against a held-out split. A parallel harness here was
-rebuilding that, and has been deleted.
-
-What remains here is the three gates skill-creator does not have — an `oracle`
-upper control, a threshold committed to git before the run, and a floor on how
-many expectations carry the effect — plus per-run tree isolation for tasks about
-a codebase. Each one corresponds to a false reading this project has already
-produced. See **[docs/how-a-skill-gets-proven.md](docs/how-a-skill-gets-proven.md)**.
-
-[skill-creator]: https://github.com/anthropics/claude-plugins-official
-
-## Commands
-
-```bash
-python eval/harness/run_checks.py --self-test
-```
-
-```bash
-python eval/harness/run_checks.py --calibrate
-```
-
-```bash
-python eval/harness/run_checks.py --drafts
-```
-
-```bash
-python eval/harness/stage.py --audit
-```
-
-```bash
-python eval/harness/prereg.py --register F004 --threshold 15
-```
-
-```bash
-python eval/harness/prereg.py --verdict F004 --benchmark <workspace>/iteration-1/benchmark.json
-```
