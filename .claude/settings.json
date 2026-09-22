@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(eval/runs/**)",
+      "Edit(eval/prereg/**)",
+      "Edit(eval/tasks/key/**)",
+      "Edit(docs/findings.md)"
+    ]
+  }
+}
