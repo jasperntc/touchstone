@@ -19,6 +19,7 @@ tested, and an untested gate is decoration.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -398,14 +399,25 @@ class Prompts(unittest.TestCase):
 
 
 class SkillCreatorCompatibility(unittest.TestCase):
-    """Read the real schema, not one invented here."""
+    """Read the real schema, not one invented here.
 
-    SCHEMA = Path.home() / ".claude" / "plugins" / "marketplaces" / \
-        "claude-plugins-official" / "plugins" / "skill-creator" / "skills" / \
-        "skill-creator" / "references" / "schemas.md"
+    TOUCHSTONE_SKILL_CREATOR_SCHEMA points at a copy checked out elsewhere (CI
+    pins one in check.yml). TOUCHSTONE_REQUIRE_SKILL_CREATOR_SCHEMA=1 makes a
+    missing file a failure: a skip is green, and a schema that moved would
+    otherwise read as a pass.
+    """
+
+    SCHEMA = Path(os.environ.get("TOUCHSTONE_SKILL_CREATOR_SCHEMA") or (
+        Path.home() / ".claude" / "plugins" / "marketplaces" /
+        "claude-plugins-official" / "plugins" / "skill-creator" / "skills" /
+        "skill-creator" / "references" / "schemas.md"))
+    REQUIRED = os.environ.get("TOUCHSTONE_REQUIRE_SKILL_CREATOR_SCHEMA") == "1"
 
     def test_the_fields_this_gate_reads_are_the_documented_ones(self):
         if not self.SCHEMA.exists():
+            if self.REQUIRED:
+                self.fail("skill-creator schema not found at {}".format(
+                    self.SCHEMA))
             self.skipTest("skill-creator plugin not installed")
         text = self.SCHEMA.read_text(encoding="utf-8")
         for field in ('"configuration"', '"eval_name"', '"pass_rate"',
