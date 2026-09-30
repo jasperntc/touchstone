@@ -241,20 +241,6 @@ class Registration(unittest.TestCase):
         finally:
             bench.unlink()
 
-    def test_an_uncommitted_registration_is_refused(self):
-        path = prereg.PREREG / "UNCOMMITTED_TEST.json"
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(SPEC) + "\n", encoding="utf-8", newline="\n")
-        try:
-            with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
-                bench = Path(f.name)
-            problems = prereg.registration_problems("UNCOMMITTED_TEST", bench)
-            bench.unlink()
-            self.assertTrue(problems, "an untracked threshold fixes nothing")
-            self.assertIn("not tracked", problems[0])
-        finally:
-            path.unlink()
-
 
 class RegistrationInARealRepo(unittest.TestCase):
     """The precedence check, exercised against actual git commits.
@@ -298,6 +284,16 @@ class RegistrationInARealRepo(unittest.TestCase):
         b.write_text("{}", encoding="utf-8")
         os.utime(b, (when, when))
         return b
+
+    def test_an_uncommitted_registration_is_refused(self):
+        # This used to write into the real eval/prereg/ and delete the file
+        # afterwards. The record is read-only, so it runs here instead.
+        path = prereg.PREREG / "UNCOMMITTED_TEST.json"
+        path.write_text(json.dumps(SPEC) + chr(10), encoding="utf-8", newline=chr(10))
+        bench = self._benchmark(1_700_009_999)
+        problems = prereg.registration_problems("UNCOMMITTED_TEST", bench)
+        self.assertTrue(problems, "an untracked threshold fixes nothing")
+        self.assertIn("not tracked", problems[0])
 
     def test_a_threshold_committed_before_the_run_is_accepted(self):
         self._commit("EARLY", 1_700_000_000)
