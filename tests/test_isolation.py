@@ -12,6 +12,7 @@ why the rest of the file exists rather than deleting it as paranoia.
 """
 from __future__ import annotations
 
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -77,6 +78,116 @@ class Staging(unittest.TestCase):
 
     def test_verify_passes_its_own_staging(self):
         self.assertEqual([], staging.verify(self.staged))
+
+
+KEY = REPO_ROOT / "eval" / "tasks" / "key"
+
+
+def _key_files():
+    """Every grading key, retired ones included. Read, never imported."""
+    return sorted(p for p in KEY.rglob("*")
+                  if p.is_file() and "__pycache__" not in p.parts)
+
+
+def _key_check_names():
+    """The check functions the keys define: `check_c8_newest_first` and so on."""
+    import ast
+    names = set()
+    for p in _key_files():
+        if p.suffix == ".py":
+            tree = ast.parse(p.read_text(encoding="utf-8"))
+            names.update(n.name for n in ast.walk(tree)
+                         if isinstance(n, ast.FunctionDef)
+                         and n.name.startswith("check_"))
+    return names
+
+
+def _leaks(tree: Path):
+    """Everything in `tree` a blind answerer could use to reach the answers."""
+    import hashlib
+    key_hashes = {hashlib.sha256(p.read_bytes()).hexdigest(): p.name
+                  for p in _key_files()}
+    key_names = {p.name.lower() for p in _key_files()}
+    checks = _key_check_names()
+    found = []
+    for p in sorted(tree.rglob("*")):
+        rel = p.relative_to(tree)
+        parts = [part.lower() for part in rel.parts]
+        if ".git" in parts:
+            found.append("{}: .git".format(rel.as_posix()))
+            continue
+        if "key" in parts:
+            found.append("{}: key/ path".format(rel.as_posix()))
+        if not p.is_file():
+            continue
+        if p.name.lower() in key_names:
+            found.append("{}: key file name".format(rel.as_posix()))
+        data = p.read_bytes()
+        digest = hashlib.sha256(data).hexdigest()
+        if digest in key_hashes:
+            found.append("{}: copy of key {}".format(rel.as_posix(),
+                                                     key_hashes[digest]))
+        text = data.decode("utf-8", errors="replace")
+        for name in sorted(checks):
+            if name in text:
+                found.append("{}: names {}".format(rel.as_posix(), name))
+    return found
+
+
+class AnswerKeyIsolation(unittest.TestCase):
+    """A blind subagent gets the staged tree. Nothing in it leads to the key."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls._tmp = tempfile.TemporaryDirectory(prefix="touchstone-keytest-")
+        cls.staged = staging.stage(Path(cls._tmp.name) / "fixture")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._tmp.cleanup()
+
+    def test_the_key_is_there_to_compare_against(self):
+        # If the key moved, every check below would pass against nothing.
+        self.assertGreaterEqual(len(_key_files()), 3)
+        self.assertIn("check_c8_newest_first", _key_check_names())
+
+    def test_no_git_entry_anywhere_in_the_staged_tree(self):
+        gits = [p for p in self.staged.rglob("*") if p.name.lower() == ".git"]
+        self.assertEqual([], gits)
+
+    def test_no_git_entry_above_the_staged_tree(self):
+        above = [d for d in self.staged.parents if (d / ".git").exists()]
+        self.assertEqual([], above, "git walking upward would find these")
+        self.assertIsNone(staging._git_toplevel(self.staged))
+
+    def test_nothing_from_the_key_was_staged(self):
+        self.assertEqual([], _leaks(self.staged))
+
+    def test_the_leak_checks_are_not_vacuous(self):
+        """Plant what must never be there, and make sure it is seen."""
+        with tempfile.TemporaryDirectory(prefix="touchstone-planted-") as tmp:
+            planted = Path(tmp) / "fixture"
+            shutil.copytree(str(self.staged), str(planted))
+            self.assertEqual([], _leaks(planted))
+            key = _key_files()[0]
+            # A key under its own name in a key/ directory, a renamed copy, and
+            # a .git directory.
+            (planted / "key").mkdir()
+            shutil.copy(str(key), str(planted / "key" / key.name))
+            shutil.copy(str(key), str(planted / "meridian" / "helpers_copy.py"))
+            (planted / ".git").mkdir()
+
+            found = _leaks(planted)
+            self.assertTrue(any("key/ path" in f for f in found), found)
+            self.assertTrue(any(f.startswith("meridian/helpers_copy.py: copy of key")
+                                for f in found), found)
+            self.assertTrue(any(f.startswith("meridian/helpers_copy.py: names check_")
+                                for f in found), found)
+            self.assertTrue(any(f == ".git: .git" for f in found), found)
+
+            problems = staging.verify(planted)
+            self.assertTrue(any("grading key" in p for p in problems), problems)
+            self.assertTrue(any(p.startswith(".git/") for p in problems), problems)
 
 
 class Refusals(unittest.TestCase):

@@ -4,7 +4,7 @@ Corrections to the record, found after the fact. `docs/findings.md` and
 everything under `eval/` are left exactly as committed; corrections live here
 instead, so the original text stays checkable.
 
-All three entries are reproduced offline by
+E1–E3 are reproduced offline by
 
     python tools/verify.py --require-git
 
@@ -108,3 +108,36 @@ decided in advance for F004 (design-F004.md:163–164) its skill doesn't
 ship either. F005's registration keeps F004's bars
 (eval/prereg/F005.json:14) but doesn't restate that rule, so this
 applies it by extension. I reported F004 without applying this rule.
+
+---
+
+## E4 — a required arm is satisfied by harm-eval runs alone
+
+**The record says.** Every registration requires three arms
+(`eval/prereg/F004.json:6`, `eval/prereg/F005.json:6`), and
+`prereg.evaluate()` returns UNREADABLE when one of them is missing
+(`eval/harness/prereg.py:144–147`).
+
+**What is true.** The required-arms check runs over all runs, before the harm
+eval is held out (`prereg.py:156–167`). An arm therefore counts as present even
+if it ran only the harm eval. If that arm is `without_skill`, its primary pool
+is empty, `_pooled([])` returns 0.0 (`prereg.py:117`), and the baseline reads
+as 0% (`:170`). Headroom, lift and every per-expectation gap are then measured
+against a control that never ran, and the verdict can be PROVEN (`:216`). An
+`oracle` or `with_skill` arm missing in the same way ends in TASK REJECTED or
+NOT PROVEN, so only the control can produce a false pass.
+
+**Evidence.** `tests/test_prereg_gates.py:261`,
+`HarmEval.test_a_control_that_only_ran_the_harm_eval_is_not_proven`, is marked
+as an expected failure. On its arms, `evaluate()` returns PROVEN with headroom
++100, lift +60 and 60% captured, while `without_skill` has 0 primary runs and
+0/0 expectations. Reproduce with
+
+    python -B -m unittest tests.test_prereg_gates -v
+
+**Effect on reported results.** None. The trigger is absent from the record:
+`eval/runs/F004/benchmark.json` and `eval/runs/F005/benchmark.json` each have
+5 primary-task runs for every arm (t004 in F004, t005 in F005), besides 5
+harm-eval runs on t002 per arm. Both verdicts stand as reported. The harness
+is left unchanged: fixing it would change the instrument that produced the
+record.

@@ -54,6 +54,16 @@ jobs:
       - name: The gates skill-creator does not have
         run: python3 -m unittest tests.test_prereg -v
 
+      # Every gate at its boundary and one step past it, with the timing cases
+      # run against throwaway repositories rather than eval/prereg/.
+      - name: Each gate, at its boundary
+        run: python3 -m unittest tests.test_prereg_gates -v
+
+      # The file above, run against copies of prereg.py with one comparison
+      # inverted per gate. Each copy must fail at least one test.
+      - name: The gate tests can fail
+        run: python3 -m unittest tests.test_prereg_mutants -v
+
       # A recommender draws on a catalogue it mostly does not own. The one
       # thing only this repository can add is what was measured about each
       # entry -- so nothing may claim proven-here without a RESULT.md naming a
