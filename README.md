@@ -1,5 +1,7 @@
 # Touchstone
 
+[![Check](https://github.com/jasperntc/touchstone/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/jasperntc/touchstone/actions/workflows/check.yml)
+
 *A collection of skills, none of which is here on anybody's say-so.*
 
 **Status: finished. `skills/` is empty, and that is the result.**

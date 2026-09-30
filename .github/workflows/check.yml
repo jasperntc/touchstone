@@ -13,13 +13,46 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Actions are pinned to a commit, not a tag: a tag can be moved.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
-          fetch-depth: 0   # test_the_hole_is_real reads history on purpose
+          # Full history and every tag. test_the_hole_is_real and verify.py
+          # read history on purpose, and the evidence check below diffs
+          # against the pre-release-baseline tag.
+          fetch-depth: 0
+          persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      # skill-creator's schema, read where it lives and never copied here.
+      # Pinned: a change upstream reaches this repository only as a deliberate
+      # edit of this SHA. Checked out after the step above, whose clean would
+      # otherwise remove it.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          repository: anthropics/claude-plugins-official
+          ref: 2a8ad9f74633d10e3d9bb0660a03bfc6e50584b1
+          path: .ci/claude-plugins-official
+          sparse-checkout: plugins/skill-creator/skills/skill-creator/references
+          persist-credentials: false
+
+      # The minor version, not a patch: everything here is stdlib, the .pyc
+      # files the history ever carried are cpython-312, and a patch pin fails
+      # the day the runner image stops shipping that build.
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
           python-version: "3.12"
+
+      # The record as tagged before release prep, compared tree to tree. Git's
+      # blob ids are content hashes of the stored bytes, so a checkout's line
+      # endings cannot make this pass or fail -- a hash manifest over working
+      # files could, and did, in agency-agents.
+      - name: The evidence is where the baseline left it
+        run: git diff --exit-code pre-release-baseline HEAD -- eval/runs/ eval/prereg/ eval/tasks/key/ docs/findings.md
+
+      # Every committed answer re-scored with the committed key, every
+      # artifact regenerated and diffed, every headline number in findings.md
+      # recomputed. --require-git makes a skipped history check a failure.
+      - name: The record re-derives from the committed answers
+        run: python tools/verify.py --require-git
 
       # A correct implementation must pass every check. When this fails the
       # bug is in the key, not in the answer.
@@ -53,6 +86,10 @@ jobs:
       # ceiling check or the spread floor fails exactly one test each.
       - name: The gates skill-creator does not have
         run: python3 -m unittest tests.test_prereg -v
+        env:
+          TOUCHSTONE_SKILL_CREATOR_SCHEMA: .ci/claude-plugins-official/plugins/skill-creator/skills/skill-creator/references/schemas.md
+          # A schema that moved upstream must turn this red, not skip it.
+          TOUCHSTONE_REQUIRE_SKILL_CREATOR_SCHEMA: "1"
 
       # Every gate at its boundary and one step past it, with the timing cases
       # run against throwaway repositories rather than eval/prereg/.
@@ -79,3 +116,10 @@ jobs:
       # enforced -- code that demonstrates a convention is the point.
       - name: Prose audit
         run: python3 eval/harness/stage.py --audit
+
+      # The tree diff above compares commits and cannot see the working copy.
+      # Anything verify.py or a test wrote into the evidence shows up here.
+      - name: Nothing above wrote into the evidence
+        run: |
+          out=$(git status --porcelain -- eval/runs/ eval/prereg/ eval/tasks/key/ docs/findings.md)
+          if [ -n "$out" ]; then echo "$out"; exit 1; fi
