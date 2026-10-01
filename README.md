@@ -17,6 +17,8 @@ Why each part is built the way it is, and its limits:
 **[docs/decisions.md](docs/decisions.md)**.
 Every mistake caught while preparing this release, mine and the AI's:
 **[REVIEW_LOG.md](REVIEW_LOG.md)**.
+Licence: **[MIT](LICENSE)** for this repository's own code and docs; third-party
+material: **[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)**.
 
 *A collection of skills, none of which is here on anybody's say-so.*
 
@@ -59,9 +61,10 @@ shipping unproven content, and it did — by never letting anything through.
 | **F004** | absent information | 15 | **unreadable**: 3 of 5 controls failed the sanity floor ([E3](docs/errata.md)) | skill not proven |
 | **F005** | leaks repaired, skill v2 | 15 | lift **+100**, capture **136%**, harm **−8.3** | skill not proven |
 
-Predecessor (`agency-agents`, 270 agent files): **116 blind subagents across two
-model tiers found no measurable effect** from the agent bodies. Selection over
-them did work — 57/58, literal reachability 70.18%.
+Predecessor ([`agency-agents`](https://github.com/msitarzewski/agency-agents) by
+[msitarzewski](https://github.com/msitarzewski), 270 agent files): **116 blind
+subagents across two model tiers found no measurable effect** from the agent
+bodies. Selection over them did work — 57/58, literal reachability 70.18%.
 
 Full write-ups, including every instrument defect: **[docs/findings.md](docs/findings.md)**.
 
