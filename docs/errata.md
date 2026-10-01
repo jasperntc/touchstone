@@ -141,3 +141,51 @@ as an expected failure. On its arms, `evaluate()` returns PROVEN with headroom
 harm-eval runs on t002 per arm. Both verdicts stand as reported. The harness
 is left unchanged: fixing it would change the instrument that produced the
 record.
+
+---
+
+## E5 — a catalogue description was published under a licence that doesn't allow it
+
+**The record says.** `eval/evidence/catalogue.json` lists 31 marketplace
+skills, each with a description taken from its plugin's `SKILL.md`. The
+`claude-security` entry (`catalogue.json:81-87`) was added in `9c80c08`
+(2026-08-22 02:48:42 +0800) and unchanged after that. It carried that skill's
+description verbatim, with the skill's `allowed-tools` list appended and the
+whole cut at 400 characters (`tools/catalogue.py:77-83`, `:138`).
+
+**What is true.** The `claude-security` plugin is not under the marketplace's
+Apache-2.0 licence. Its own `LICENSE` is proprietary ("All rights reserved").
+It grants use for internal purposes only and, except as Anthropic's terms
+expressly permit, forbids distributing or publishing the plugin
+(`plugins/claude-security/LICENSE:3`, `:13-18` in
+`anthropics/claude-plugins-official` at `340e33aef211`).
+
+In HEAD, that entry's description is replaced with
+"[description omitted: claude-security's licence doesn't permit
+redistribution]" (`catalogue.json:82`). Its name, source, status, citation and
+`public` flag are unchanged, so `count` and `by_status` are unchanged.
+`eval/evidence/sources.json:31-37` adds a `public: false` rule for that plugin
+above the marketplace rule, so `tools/catalogue.py --publish` cannot write the
+text again. A re-publish would leave the entry out altogether.
+
+The text remains in every commit from `9c80c08` onward, including the
+`pre-release-baseline` tag. Removing it from history would mean rewriting
+every later commit, which changes its hash, and this file and `findings.md`
+cite those hashes (`6322933`, `2da2279`, `5f583a0`, …).
+
+This redaction and the `sources.json` rule that keeps it out are the only
+changes made under `eval/` after the fact. Everything else there is as
+committed.
+
+**Evidence.** `git log -S "The Claude Security menu" --
+eval/evidence/catalogue.json` shows the text added in `9c80c08` and removed only
+by the commit that adds this entry; `eval/evidence/catalogue.json:82`;
+`eval/evidence/sources.json:31-37`.
+
+**Effect on reported results.** None. Nothing reads the description.
+`tools/catalogue.py --check` and `tests/test_catalogue.py` build their entries
+by scanning the installed plugins and never read `catalogue.json`
+(`tools/catalogue.py:126-170`, `:190-192`); only `--publish` writes it
+(`:219-221`). `tools/verify.py` neither reads nor hashes `eval/evidence/`. Its
+evidence set is `eval/runs`, `eval/prereg`, `eval/tasks/key` and
+`docs/findings.md` (`tools/verify.py:82`).

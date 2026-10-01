@@ -79,7 +79,7 @@
     },
     {
       "name": "claude-security",
-      "description": "The Claude Security menu \u2014 pick a job: scan the codebase (the whole repository or a scoped part of it), scan changes (this branch's or a pull request's diff, or one commit), or suggest patches (findings turned into targeted patch files, each verified by a panel of agents, that you apply when you choose). - Read - Write - Glob - Grep - AskUserQuestion - Workflow - Workflow(claude-security:scan) - A",
+      "description": "[description omitted: claude-security's licence doesn't permit redistribution]",
       "source": "marketplaces/claude-plugins-official/plugins/claude-security",
       "kind": "plugin-skill",
       "status": "shipped-unmeasured",

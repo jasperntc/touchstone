@@ -29,6 +29,13 @@
       "citation": "agency-agents: 116 blind subagents across two model tiers found no measurable effect from these bodies; selection/routing over them did work, 57/58"
     },
     {
+      "match": "marketplaces/claude-plugins-official/plugins/claude-security/",
+      "status": "shipped-unmeasured",
+      "public": false,
+      "citation": "Anthropic official marketplace; widely used, not independently measured here",
+      "note": "Proprietary licence: its description may not be redistributed, so this entry is never published. See docs/errata.md E5."
+    },
+    {
       "match": "marketplaces/claude-plugins-official/",
       "status": "shipped-unmeasured",
       "public": true,
