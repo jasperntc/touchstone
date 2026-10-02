@@ -183,8 +183,8 @@ fixture as a blind test.
 
 ## Freezing the record; correcting via errata
 
-`findings.md` and everything under `eval/` stay as committed; corrections go in
-`errata.md` (`errata.md:3-5`); harness bugs stay unfixed.
+Except E5's redaction (`errata.md:147`), `findings.md` and `eval/` stay as
+committed; `errata.md:3-5` holds corrections; harness bugs stay unfixed.
 
 **Why:** the original stays checkable, and the instrument stays the one that
 produced the record (`errata.md:4-5`, `:41-42`).
