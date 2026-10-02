@@ -1,8 +1,8 @@
 # Errata
 
-Corrections to the record, found after the fact. `docs/findings.md` and
-everything under `eval/` are left exactly as committed; corrections live here
-instead, so the original text stays checkable.
+Corrections to the record, found after the fact. Except E5's redaction,
+`docs/findings.md` and everything under `eval/` are left exactly as committed;
+corrections live here instead, so the original text stays checkable.
 
 E1–E3 are reproduced offline by
 
